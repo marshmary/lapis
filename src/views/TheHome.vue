@@ -1,11 +1,19 @@
 <template>
-    <main>This is home page</main>
+    <content-wrapper>
+        <image-list />
+    </content-wrapper>
 </template>
 
 <script>
+import ContentWrapper from "../components/ContentWrapper.vue";
+import ImageList from "../components/ImageList.vue";
+
 export default {
     name: "TheHome",
-    props: {},
+    components: {
+        ContentWrapper,
+        ImageList,
+    },
 };
 </script>
 
