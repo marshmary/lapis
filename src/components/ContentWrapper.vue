@@ -8,7 +8,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 .wrapper {
     width: 100%;
     min-height: calc(100vh - 56px);

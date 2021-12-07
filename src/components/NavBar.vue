@@ -4,7 +4,7 @@
         aria-label="Fourth navbar example"
     >
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Lapis</a>
+            <router-link class="navbar-brand" to="/">Lapis</router-link>
             <button
                 class="navbar-toggler"
                 type="button"
@@ -20,16 +20,22 @@
             <div class="collapse navbar-collapse" id="navbarsExample04">
                 <ul class="navbar-nav ms-auto mb-2 mb-md-0">
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="/">Home</a>
+                        <router-link class="nav-link" to="/">Home</router-link>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="/about">About</a>
+                        <router-link class="nav-link" to="/about"
+                            >About</router-link
+                        >
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="/login">Login</a>
+                        <router-link class="nav-link" to="/login"
+                            >Login</router-link
+                        >
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" href="/signup">Sign up</a>
+                        <router-link class="nav-link" to="/signup"
+                            >Sign up</router-link
+                        >
                     </li>
 
                     <li class="nav-item ms-3">
@@ -72,6 +78,10 @@ export default {};
 
 
 <style scoped>
+.fixed-top {
+    z-index: 10;
+}
+
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;

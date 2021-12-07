@@ -114,4 +114,9 @@ export default {
     background-color: var(--color-mint);
     border-color: var(--color-mint);
 }
+
+.btn-primary:hover {
+    background-color: var(--color-mint-hight);
+    border-color: var(--color-mint-hight);
+}
 </style>
