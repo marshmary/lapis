@@ -7,5 +7,15 @@ module.exports = {
             cert: fs.readFileSync('./localhost.pem'),
         },
         public: 'https://localhost:8080/'
+    },
+    css: {
+        loaderOptions: {
+            sass: {
+                additionalData: `
+                    @import "@/scss/_variables.scss";
+                    @import "@/scss/_mixins.scss";
+                `
+            }
+        }
     }
 }

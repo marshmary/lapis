@@ -23,7 +23,7 @@
         >
             <div
                 class="col-12 col-md-4 col-lg-3 col-xxl-2 mb-4"
-                v-for="image in data"
+                v-for="image in data.payload"
                 :key="image.id"
             >
                 <image-list-item :image="image" />
@@ -33,32 +33,37 @@
 </template>
 
 <script>
-import axios from "axios";
+// libs
+import { ref, onMounted } from "vue";
+
+// components
 import ImageListItemLoading from "./ImageListItemLoading.vue";
 import ImageListItem from "./ImageListItem.vue";
 
+// composable
+import { useFetch } from "../composable/use-fetch";
+
 export default {
     name: "ImageList",
+    setup() {
+        const data = ref([]);
+        const loading = ref(true);
+        const errors = ref(undefined);
+
+        onMounted(async () => {
+            const res = await useFetch(
+                `${process.env.VUE_APP_BACKEND_API}/images`
+            );
+            data.value = res.data;
+            loading.value = res.loading;
+            errors.value = res.errors;
+        });
+
+        return { data, loading, errors };
+    },
     components: {
         ImageListItemLoading,
         ImageListItem,
-    },
-    data() {
-        return {
-            data: null,
-            loading: true,
-            errors: false,
-        };
-    },
-    mounted() {
-        axios
-            .get(`${process.env.VUE_APP_BACKEND_API}/images`)
-            .then((response) => (this.data = response.data.payload))
-            .catch((error) => {
-                console.log(error);
-                this.errors = true;
-            })
-            .finally(() => (this.loading = false));
     },
 };
 </script>
