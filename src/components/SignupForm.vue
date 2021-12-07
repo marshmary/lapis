@@ -1,5 +1,7 @@
 <template>
-  <the-modal ref="modal" :modalValue="modal"></the-modal>
+  <teleport to="#app">
+    <the-modal ref="modal" :modalValue="modal"></the-modal>
+  </teleport>
   <div class="form_box shadow_app border_app row mx-0">
     <div class="col-12 col-md-6 d-flex justify-content-center align-items-center px-5">
       <form class="row g-2" @submit.prevent="onSubmit">
