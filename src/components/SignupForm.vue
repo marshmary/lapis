@@ -117,10 +117,9 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, sameAs, helpers } from "@vuelidate/validators";
 
 // Composable
-import { useFetch } from "../composable/use-fetch";
+import { useFetch } from "../composable/useFetch";
 
 export default {
-  name: "SignupForm",
   props: {
     imageurl: String,
   },
@@ -160,7 +159,7 @@ export default {
           name: this.form.fullname,
         },
         onCompleted: () => {
-          this.$router.push("Login");
+          this.$router.push("/login");
         },
         onError: (errors) => {
           // Show modal
@@ -178,17 +177,9 @@ export default {
   validations() {
     return {
       form: {
-        fullname: {
-          required,
-        },
-        email: {
-          required,
-          email,
-        },
-        password: {
-          required,
-          min: minLength(8),
-        },
+        fullname: { required },
+        email: { required, email },
+        password: { required, min: minLength(8) },
         rePassword: {
           required,
           sameAsPassword: helpers.withMessage(
