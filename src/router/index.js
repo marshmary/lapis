@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useUserStore } from "../store/useUser";
 
 const routes = [
     {
@@ -22,7 +23,7 @@ const routes = [
         component: () => import('../views/TheSignup.vue')
     },
     {
-        path: '/users/:id',
+        path: '/user/:id',
         name: 'UserDetail',
         component: () => import('../views/TheUserDetail.vue')
     },
@@ -37,5 +38,29 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
 })
+
+// Check can user access to that route
+router.beforeEach((to, from, next) => {
+    // User store
+    const userStore = useUserStore();
+
+    // Variable
+    const privatePages = ['UserDetail'];
+    const authRequired = privatePages.includes(to.name);
+    const loggedIn = userStore.localSave;
+
+    if (authRequired && !loggedIn) {
+        return next('/login')
+    }
+    else {
+        // Set user data
+        if (loggedIn) userStore.setUserDetail(loggedIn)
+
+        // Check route
+        if (to.name === 'Login' && !userStore.isEmpty) next({ name: 'Home' })
+        else if (to.name === 'Signup' && !userStore.isEmpty) next({ name: 'Home' })
+        else next()
+    }
+});
 
 export default router

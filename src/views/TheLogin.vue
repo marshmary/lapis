@@ -1,13 +1,14 @@
 <template>
-    <h3>This is login page</h3>
+  <image-wrapper :imageurl="imageurl">
+    <login-form :imageurl="imageurl" />
+  </image-wrapper>
 </template>
 
-<script>
-export default {
-    name: "TheLogin",
-    props: {},
-};
+<script setup>
+import ImageWrapper from "../components/ImageWrapper.vue";
+import LoginForm from "../components/LoginForm.vue";
+
+let imageurl = "https://i.ibb.co/jvXysdr/84908698-p1.jpg";
 </script>
 
-<style>
-</style>
+<style></style>

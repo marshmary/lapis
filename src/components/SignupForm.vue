@@ -1,5 +1,7 @@
 <template>
-  <the-modal ref="modal" :modalValue="modal"></the-modal>
+  <teleport to="body">
+    <the-modal ref="modal" :modalValue="modal"></the-modal>
+  </teleport>
   <div class="form_box shadow_app border_app row mx-0">
     <div class="col-12 col-md-6 d-flex justify-content-center align-items-center px-5">
       <form class="row g-2" @submit.prevent="onSubmit">
@@ -115,15 +117,18 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, sameAs, helpers } from "@vuelidate/validators";
 
 // Composable
-import { useFetch } from "../composable/use-fetch";
+import { useFetch } from "../composable/useFetch";
+import TheModal from "./TheModal.vue";
 
 export default {
-  name: "SignupForm",
   props: {
     imageurl: String,
   },
   setup() {
     return { v$: useVuelidate() };
+  },
+  components: {
+    TheModal,
   },
   data() {
     return {
@@ -158,7 +163,7 @@ export default {
           name: this.form.fullname,
         },
         onCompleted: () => {
-          this.$router.push("Login");
+          this.$router.push("/login");
         },
         onError: (errors) => {
           // Show modal
@@ -176,17 +181,9 @@ export default {
   validations() {
     return {
       form: {
-        fullname: {
-          required,
-        },
-        email: {
-          required,
-          email,
-        },
-        password: {
-          required,
-          min: minLength(8),
-        },
+        fullname: { required },
+        email: { required, email },
+        password: { required, min: minLength(8) },
         rePassword: {
           required,
           sameAsPassword: helpers.withMessage(
