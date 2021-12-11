@@ -78,13 +78,10 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { useRouter } from "vue-router";
 
-// Composable
-import { useFetch } from "../composable/useFetch";
-
-// Store
-import { useUserStore } from "../store/useUser";
-
-import TheModal from "./TheModal.vue";
+// Projs
+import { useFetch } from "@/composable/useFetch";
+import TheModal from "@/components/TheModal.vue";
+import { useUserStore } from "@/store/useUser";
 
 // Props for background image
 const props = defineProps({

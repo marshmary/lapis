@@ -5,8 +5,8 @@
 </template>
 
 <script setup>
-import ImageWrapper from "../components/ImageWrapper.vue";
-import LoginForm from "../components/LoginForm.vue";
+import ImageWrapper from "@/components/ImageWrapper.vue";
+import LoginForm from "@/components/LoginForm.vue";
 
 let imageurl = "https://i.ibb.co/jvXysdr/84908698-p1.jpg";
 </script>

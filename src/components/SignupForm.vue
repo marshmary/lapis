@@ -117,8 +117,8 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, sameAs, helpers } from "@vuelidate/validators";
 
 // Composable
-import { useFetch } from "../composable/useFetch";
-import TheModal from "./TheModal.vue";
+import { useFetch } from "@/composable/useFetch";
+import TheModal from "@/components/TheModal.vue";
 
 export default {
   props: {

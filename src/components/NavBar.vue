@@ -71,7 +71,7 @@
 
 <script setup>
 // Store
-import { useUserStore } from "../store/useUser";
+import { useUserStore } from "@/store/useUser";
 
 // Router
 import { useRouter } from "vue-router";

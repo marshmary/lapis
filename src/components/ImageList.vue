@@ -30,11 +30,11 @@
 
 <script>
 // components
-import ImageListItemLoading from "./ImageListItemLoading.vue";
-import ImageListItem from "./ImageListItem.vue";
+import ImageListItemLoading from "@/components/ImageListItemLoading.vue";
+import ImageListItem from "@/components/ImageListItem.vue";
 
 // composable
-import { useFetch } from "../composable/useFetch";
+import { useFetch } from "@/composable/useFetch";
 
 export default {
   name: "ImageList",
