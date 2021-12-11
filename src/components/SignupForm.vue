@@ -1,5 +1,5 @@
 <template>
-  <teleport to="#app">
+  <teleport to="body">
     <the-modal ref="modal" :modalValue="modal"></the-modal>
   </teleport>
   <div class="form_box shadow_app border_app row mx-0">
@@ -118,6 +118,7 @@ import { required, email, minLength, sameAs, helpers } from "@vuelidate/validato
 
 // Composable
 import { useFetch } from "../composable/useFetch";
+import TheModal from "./TheModal.vue";
 
 export default {
   props: {
@@ -125,6 +126,9 @@ export default {
   },
   setup() {
     return { v$: useVuelidate() };
+  },
+  components: {
+    TheModal,
   },
   data() {
     return {

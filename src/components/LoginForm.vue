@@ -1,5 +1,5 @@
 <template>
-  <teleport to="#app">
+  <teleport to="body">
     <the-modal ref="modal" :modalValue="state.modal"></the-modal>
   </teleport>
   <div class="form_box shadow_app border_app row mx-0">
@@ -83,6 +83,8 @@ import { useFetch } from "../composable/useFetch";
 
 // Store
 import { useUserStore } from "../store/useUser";
+
+import TheModal from "./TheModal.vue";
 
 // Props for background image
 const props = defineProps({
