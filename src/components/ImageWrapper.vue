@@ -18,18 +18,6 @@ const image = `url(${props.imageurl})`;
 </script>
 
 <style lang="scss" scoped>
-@mixin wrapper-height {
-  width: 100%;
-  min-height: calc(100vh - 56px);
-}
-
-@mixin fix-position {
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: 1;
-}
-
 .wrapper {
   @include wrapper-height();
 }

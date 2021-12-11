@@ -221,11 +221,6 @@ export default {
   text-decoration: underline;
 }
 
-.border_app_right {
-  border-bottom-right-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
 .btn-primary {
   background-color: var(--color-mint);
   border-color: var(--color-mint);

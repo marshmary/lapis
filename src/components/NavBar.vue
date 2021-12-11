@@ -50,14 +50,16 @@
                 >
                   <img :src="userStore.avatar" alt="user avatar" class="user_avatar" />
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end">
+                <ul class="dropdown-menu dropdown-menu-end bg-dark">
                   <li>
-                    <router-link class="dropdown-item" :to="`/user/${userStore.id}`"
+                    <router-link
+                      class="dropdown-item text_color"
+                      :to="`/user/${userStore.id}`"
                       >Profile</router-link
                     >
                   </li>
                   <li>
-                    <p class="dropdown-item my-0" @click="logout">Logout</p>
+                    <p class="dropdown-item my-0 text_color" @click="logout">Logout</p>
                   </li>
                 </ul>
               </div>
@@ -118,5 +120,9 @@ nav {
   border-radius: 50%;
   height: 1.5rem;
   width: 1.5rem;
+}
+
+.text_color {
+  color: var(--text-content);
 }
 </style>

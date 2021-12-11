@@ -38,6 +38,16 @@ body {
   border-radius: 8px !important;
 }
 
+.border_app_left {
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.border_app_right {
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
 :root {
   --color-grapefruit: #eb5562;
   --color-bittersweet: #fb6c50;

@@ -21,11 +21,7 @@
             v-model="v$.form.email.$model"
           />
           <!-- error message -->
-          <div
-            class="input-errors"
-            v-for="(error, index) of v$.form.email.$errors"
-            :key="index"
-          >
+          <div class="input-errors" v-for="(error, index) of v$.form.email.$errors" :key="index">
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
@@ -41,11 +37,7 @@
             v-model="v$.form.password.$model"
           />
           <!-- error message -->
-          <div
-            class="input-errors"
-            v-for="(error, index) of v$.form.password.$errors"
-            :key="index"
-          >
+          <div class="input-errors" v-for="(error, index) of v$.form.password.$errors" :key="index">
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
@@ -56,9 +48,7 @@
             type="submit"
             class="btn btn-primary px-4 px-xl-5"
             :disabled="v$.form.$invalid || loading"
-          >
-            Login
-          </button>
+          >Login</button>
           <div>
             <p class="ms-3 my-0">
               or
@@ -167,11 +157,6 @@ const onSubmit = async () => {
 .text_link:hover {
   color: var(--color-mint-hight);
   text-decoration: underline;
-}
-
-.border_app_left {
-  border-bottom-left-radius: 8px;
-  border-top-left-radius: 8px;
 }
 
 .btn-primary {
