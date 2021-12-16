@@ -28,6 +28,11 @@ const routes = [
         component: () => import('@/views/TheUserDetail.vue')
     },
     {
+        path: '/upload',
+        name: 'Upload',
+        component: () => import('@/views/TheUpload.vue')
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: () => import('@/views/TheError.vue')
@@ -45,16 +50,17 @@ router.beforeEach((to, from, next) => {
     const userStore = useUserStore();
 
     // Variable
-    const privatePages = ['UserDetail'];
+    const privatePages = ['UserDetail', 'Upload'];
     const authRequired = privatePages.includes(to.name);
-    const loggedIn = userStore.localSave;
+    const notLoggedIn = userStore.isEmpty;
+    const localSave = userStore.localSave;
 
-    if (authRequired && !loggedIn) {
+    if (authRequired && (notLoggedIn === true || !localSave)) {
         return next('/login')
     }
     else {
         // Set user data
-        if (loggedIn) userStore.setUserDetail(loggedIn)
+        if (notLoggedIn && localSave) userStore.login(localSave);
 
         // Check route
         if (to.name === 'Login' && !userStore.isEmpty) next({ name: 'Home' })

@@ -1,8 +1,8 @@
 <template>
-  <teleport to="body">
-    <the-modal ref="modal" :modalValue="state.modal"></the-modal>
-  </teleport>
   <div class="form_box shadow_app border_app row mx-0">
+    <teleport to="body">
+      <the-modal ref="modal" :modalValue="state.modal"></the-modal>
+    </teleport>
     <div class="d-none d-sm-block col-6 form_image border_app_left"></div>
     <div class="col-12 col-md-6 d-flex justify-content-center align-items-center px-5">
       <form class="row g-2" @submit.prevent="onSubmit">
@@ -21,7 +21,11 @@
             v-model="v$.form.email.$model"
           />
           <!-- error message -->
-          <div class="input-errors" v-for="(error, index) of v$.form.email.$errors" :key="index">
+          <div
+            class="input-errors"
+            v-for="(error, index) of v$.form.email.$errors"
+            :key="index"
+          >
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
@@ -37,7 +41,11 @@
             v-model="v$.form.password.$model"
           />
           <!-- error message -->
-          <div class="input-errors" v-for="(error, index) of v$.form.password.$errors" :key="index">
+          <div
+            class="input-errors"
+            v-for="(error, index) of v$.form.password.$errors"
+            :key="index"
+          >
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
@@ -48,7 +56,9 @@
             type="submit"
             class="btn btn-primary px-4 px-xl-5"
             :disabled="v$.form.$invalid || loading"
-          >Login</button>
+          >
+            Login
+          </button>
           <div>
             <p class="ms-3 my-0">
               or
@@ -121,7 +131,7 @@ const onSubmit = async () => {
     },
     onCompleted: (res) => {
       loading.value = false;
-      userStore.setUserDetail(res);
+      userStore.login(res);
       router.push("/");
     },
     onError: (errors) => {

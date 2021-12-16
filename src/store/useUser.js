@@ -13,42 +13,52 @@ export const useUserStore = defineStore("userStore", {
         }
     },
     getters: {
-        isEmpty() {
-            if (this.id === "" && this.email === "" && this.name === "" && this.avatar === "" && this.wallpaper === "" && this.accessToken === "") {
+        isEmpty: (state) => {
+            if (state.id === "" && state.email === "" && state.name === "" && state.avatar === "" && state.wallpaper === "" && state.accessToken === "") {
                 return true;
             }
 
             return false;
         },
-        localSave() {
-            try {
-                const localUser = JSON.parse(localStorage.getItem('user'));
-                const localToken = localStorage.getItem('accessToken');
+        localSave: (state) => {
+            if (state.id === "") {
+                try {
+                    const localUser = JSON.parse(localStorage.getItem('user'));
+                    const localToken = localStorage.getItem('accessToken');
 
-                // Check valid access token
-                if (!localToken) return null;
+                    // Check valid access token
+                    if (!localToken) return null;
 
-                let decodedToken = jwtDecode(localToken);
+                    let decodedToken = jwtDecode(localToken);
 
-                if (decodedToken.exp * 1000 < Date.now()) {
-                    localStorage.removeItem("accessToken");
-                    localStorage.removeItem("user");
-                    return null;
-                }
+                    if (decodedToken.exp * 1000 < Date.now()) {
+                        localStorage.removeItem("accessToken");
+                        localStorage.removeItem("user");
+                        return null;
+                    }
 
-                const user = {
-                    id: localUser.id,
-                    email: localUser.email,
-                    name: localUser.name,
-                    avatar: localUser.avatar,
-                    wallpaper: localUser.wallpaper,
-                    accessToken: localToken
+                    const user = {
+                        id: localUser.id,
+                        email: localUser.email,
+                        name: localUser.name,
+                        avatar: localUser.avatar,
+                        wallpaper: localUser.wallpaper,
+                        accessToken: localToken
+                    };
+                    return user;
+                } catch { return null; }
+            } else {
+                return {
+                    id: state.id,
+                    email: state.email,
+                    name: state.name,
+                    avatar: state.avatar,
+                    wallpaper: state.wallpaper,
+                    accessToken: state.accessToken,
                 };
-                return user;
-            } catch {
-                return null;
             }
         }
+
     },
     actions: {
         updateAccessToken(newToken) {
@@ -60,7 +70,7 @@ export const useUserStore = defineStore("userStore", {
         updateWallpeper(newWallpaper) {
             this.wallpaper = newWallpaper;
         },
-        setUserDetail(user) {
+        login(user) {
             localStorage.setItem("accessToken", user.accessToken);
             localStorage.setItem("user", JSON.stringify({
                 id: user.id,

@@ -3,8 +3,8 @@
     <p>Unable to find data</p>
   </section>
 
-  <section v-if="loading">
-    <div class="row mx-0">
+  <section v-else-if="loading">
+    <div class="row mx-0 pt-4">
       <div class="col-12 col-md-4 col-lg-3 col-xxl-2 mb-4" v-for="n in 8" :key="n">
         <image-list-item-loading />
       </div>
@@ -13,7 +13,7 @@
 
   <section v-else>
     <div
-      class="row mx-0 scrolling_component"
+      class="row mx-0 scrolling_component pt-4"
       ref="scrollComponent"
       data-masonry="{'percentPosition': true }"
     >
