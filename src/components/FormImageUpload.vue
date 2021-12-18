@@ -1,13 +1,16 @@
 <script setup>
+import { reactive, ref } from "vue";
 import TheModal from "@/components/TheModal.vue";
 import { useCheckFile } from "@/helpers/useCheckFile";
-import { reactive, ref } from "vue";
+import { usePalette } from "@/helpers/usePalette";
 
 const modal = ref(undefined); // Modal to show error
-const hiddeninput = ref(undefined);
-const uploadImage = ref(null);
+const hiddeninput = ref(undefined); // Input for load iamge
+const uploadImage = ref(null); // Link to show image
+const { validateMessage, checkFile } = useCheckFile(); // Input file checker
+const { primaryColor, secondaryColor, tertiaryColor, getCollorsFromFile } = usePalette(); // Get image palette
 
-const { validateMessage, checkFile } = useCheckFile();
+// Local state
 const state = reactive({
   form: {
     image: null,
@@ -33,6 +36,7 @@ const state = reactive({
   },
 });
 
+// Upload image by dragging
 const handleDragImage = () => {
   state.status.over = true;
 };
@@ -51,8 +55,15 @@ const handleDropImage = (event) => {
       state.modal.isError = true;
       modal.value.showModal();
     } else {
+      // update image to state
       uploadImage.value = URL.createObjectURL(fileItem);
       state.form.image = fileItem;
+
+      // try to get color from image
+      getCollorsFromFile(fileItem);
+      state.form.colors.primary = primaryColor;
+      state.form.colors.secondary = secondaryColor;
+      state.form.colors.tertiary = tertiaryColor;
     }
   } catch {
     uploadImage.value = null;
@@ -63,23 +74,44 @@ const handleDragLeaveImage = () => {
   state.status.over = false;
 };
 
+// Upload image using input element
+const handleClickUpload = () => {
+  hiddeninput.value.click();
+};
+
 const handleUploadImage = (event) => {
   try {
     const fileItem = event.target.files[0];
-    uploadImage.value = URL.createObjectURL(fileItem);
-    state.form.image = fileItem;
+    var rs = checkFile(fileItem, "images");
+
+    if (rs == false) {
+      state.modal.title = "Error";
+      state.modal.body = validateMessage;
+      state.modal.isError = true;
+      modal.value.showModal();
+    } else {
+      // Update state
+      uploadImage.value = URL.createObjectURL(fileItem);
+      state.form.image = fileItem;
+
+      // Try to detect color palette from image
+      getCollorsFromFile(fileItem);
+      state.form.colors.primary = primaryColor;
+      state.form.colors.secondary = secondaryColor;
+      state.form.colors.tertiary = tertiaryColor;
+    }
   } catch {
     uploadImage.value = null;
   }
 };
 
-const handleClickUpload = () => {
-  hiddeninput.value.click();
-};
-
+// Remove uploaded image
 const handleRemoveUploadImage = () => {
   uploadImage.value = null;
   state.form.image = null;
+  state.form.colors.primary = "";
+  state.form.colors.secondary = "";
+  state.form.colors.tertiary = "";
 };
 </script>
 

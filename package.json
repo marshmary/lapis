@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@agencyanalytics/colorthief": "^2.3.3",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
@@ -20,8 +21,9 @@
     "core-js": "^3.6.5",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
-    "node-vibrant": "^3.2.1-alpha.1",
+    "node-vibrant": "^3.1.6",
     "pinia": "^2.0.6",
+    "quantize": "^1.0.2",
     "v3-infinite-loading": "^1.0.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12"
