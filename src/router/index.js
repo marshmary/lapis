@@ -40,6 +40,7 @@ const routes = [
 ]
 
 const router = createRouter({
+    mode: 'history',
     history: createWebHistory(process.env.BASE_URL),
     routes
 })
@@ -53,9 +54,11 @@ router.beforeEach((to, from, next) => {
     const privatePages = ['UserDetail', 'Upload'];
     const authRequired = privatePages.includes(to.name);
     const notLoggedIn = userStore.isEmpty;
+
     const localSave = userStore.localSave;
 
-    if (authRequired && (notLoggedIn === true || !localSave)) {
+
+    if (authRequired && localSave === null) {
         return next('/login')
     }
     else {

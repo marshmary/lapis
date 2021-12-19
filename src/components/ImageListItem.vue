@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios as axiosDownloadImageOnly from "axios";
 import moment from "moment";
 
 export default {
@@ -68,14 +68,26 @@ export default {
   },
   methods: {
     download(url) {
-      axios.get(url, { responseType: "blob" }).then((response) => {
-        const blob = response.data;
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = blob.size;
-        link.click();
-        URL.revokeObjectURL(link.href);
-      });
+      fetch(url, { method: "GET" })
+        .then((response) => response.blob())
+        .then((blob) => {
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = blob.size;
+          document.body.appendChild(link); // to work on Firefox
+          link.click();
+          URL.revokeObjectURL(link.href);
+          link.remove();
+        });
+
+      // axios.get(url, { responseType: "blob" }).then((response) => {
+      //   const blob = response.data;
+      //   const link = document.createElement("a");
+      //   link.href = URL.createObjectURL(blob);
+      //   link.download = blob.size;
+      //   link.click();
+      //   URL.revokeObjectURL(link.href);
+      // });
     },
   },
   beforeCreate() {

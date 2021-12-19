@@ -1,12 +1,18 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { required, url } from "@vuelidate/validators";
 import TheModal from "@/components/TheModal.vue";
 import { useCheckFile } from "@/helpers/useCheckFile";
+import { useFetch } from "@/composable/useFetch";
 import { usePalette } from "@/helpers/usePalette";
+// import { useRouter } from "vue-router";
 
 const modal = ref(undefined); // Modal to show error
+const loading = ref(false); // Loading value
 const hiddeninput = ref(undefined); // Input for load iamge
 const uploadImage = ref(null); // Link to show image
+// const router = useRouter();
 const { validateMessage, checkFile } = useCheckFile(); // Input file checker
 const { primaryColor, secondaryColor, tertiaryColor, getCollorsFromFile } = usePalette(); // Get image palette
 
@@ -35,6 +41,18 @@ const state = reactive({
     dropped: false,
   },
 });
+
+const rules = computed(() => ({
+  form: {
+    image: { required },
+    credit: {
+      author: { required },
+      sourceUrl: { required, url },
+    },
+  },
+}));
+
+const v$ = useVuelidate(rules, state);
 
 // Upload image by dragging
 const handleDragImage = () => {
@@ -113,6 +131,59 @@ const handleRemoveUploadImage = () => {
   state.form.colors.secondary = "";
   state.form.colors.tertiary = "";
 };
+
+// Handle change in tag input
+const onTagAdded = (slug) => {
+  state.form.tags.push(slug.value);
+};
+
+const onTagRemoved = (slug) => {
+  state.form.tags = state.form.tags.filter((tag) => tag !== slug.value);
+};
+
+// Submit new image
+const onSubmit = async () => {
+  loading.value = true;
+
+  let formData = new FormData();
+  formData.append("image", state.form.image);
+  formData.append("colors.Primary", state.form.colors.primary);
+  formData.append("colors.Secondary", state.form.colors.secondary);
+  formData.append("colors.Tertiary", state.form.colors.tertiary);
+  formData.append("credit.Author", state.form.credit.author);
+  formData.append("credit.SourceUrl", state.form.credit.sourceUrl);
+  formData.append("credit.SourceUrl", state.form.credit.sourceUrl);
+  if (state.form.tags.length !== 0) {
+    for (let tag in state.form.tags) {
+      formData.append("tags", state.form.tags[tag]);
+    }
+  }
+
+  useFetch(`${process.env.VUE_APP_BACKEND_API}/images`, {
+    method: "post",
+    body: formData,
+    onCompleted: (res) => {
+      loading.value = false;
+      state.modal.title = "Success";
+      state.modal.body = res.message;
+      state.modal.isError = false;
+      // clearFormData();
+      modal.value.showModal();
+    },
+    onError: (errors) => {
+      loading.value = false;
+      // Show modal
+      state.modal.title = "Error";
+      state.modal.body = errors.message;
+      state.modal.isError = true;
+      modal.value.showModal();
+    },
+  });
+};
+
+// const clearFormData = () => {
+//   router.go();
+// };
 </script>
 
 <template>
@@ -127,9 +198,12 @@ const handleRemoveUploadImage = () => {
       <!-- Image upload -->
       <div class="col-6 d-flex justify-content-center align-items-center">
         <!-- Submitted image -->
-        <div v-if="uploadImage" class="drag_box" @click="handleRemoveUploadImage">
+        <div v-if="uploadImage" class="drag_box">
           <img :src="uploadImage" class="upload_image border_app" />
-          <div class="remove_button d-flex justify-content-center align-items-center">
+          <div
+            class="remove_button d-flex justify-content-center align-items-center"
+            @click="handleRemoveUploadImage"
+          >
             <font-awesome-icon icon="trash" size="2x" />
           </div>
         </div>
@@ -159,45 +233,86 @@ const handleRemoveUploadImage = () => {
           @change.prevent="handleUploadImage"
         />
       </div>
+
       <!-- Image content -->
       <div class="col-12 col-md-6 d-flex justify-content-center align-items-center px-5">
         <form class="row g-2" @submit.prevent="onSubmit">
           <div class="col-12">
-            <h3>Login</h3>
+            <h4>Details</h4>
+          </div>
+          <!-- Author -->
+          <div class="col-12">
+            <label for="inputCredit" class="form-label">Author</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputCredit"
+              placeholder="Enter author name"
+              v-model="v$.form.credit.author.$model"
+            />
+            <!-- error message -->
+            <div
+              class="input-errors"
+              v-for="(error, index) of v$.form.credit.author.$errors"
+              :key="index"
+            >
+              <div class="error-msg">{{ error.$message }}</div>
+            </div>
           </div>
 
-          <!-- Email -->
+          <!-- Direct link -->
           <div class="col-12">
-            <label for="inputEmai" class="form-label">Email</label>
+            <label for="inputSource" class="form-label">Source url</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
-              id="inputEmai"
-              placeholder="Enter email"
+              id="inputSource"
+              placeholder="Enter source url"
+              v-model="v$.form.credit.sourceUrl.$model"
             />
-            <!-- v-model="v$.form.email.$model" -->
+            <!-- Demo link -->
+            <a
+              v-if="
+                state.form.credit.sourceUrl &&
+                v$.form.credit.sourceUrl.$errors.length === 0
+              "
+              class="text_link"
+              :href="state.form.credit.sourceUrl"
+              target="_blank"
+              >Try access</a
+            >
             <!-- error message -->
-            <!-- <div
-            class="input-errors"
-            v-for="(error, index) of v$.form.email.$errors"
-            :key="index"
-          >
-            <div class="error-msg">{{ error.$message }}</div>
-            </div>-->
+            <div
+              class="input-errors"
+              v-for="(error, index) of v$.form.credit.sourceUrl.$errors"
+              :key="index"
+            >
+              <div class="error-msg">{{ error.$message }}</div>
+            </div>
+          </div>
+
+          <!-- Tag -->
+          <div class="col-12">
+            <label for="inputEmai" class="form-label">Tags</label>
+            <tags-input
+              element-id="imagetags"
+              :add-tags-on-comma="true"
+              @tag-added="onTagAdded"
+              @tag-removed="onTagRemoved"
+            ></tags-input>
+            <!-- Small info -->
+            <p class="text_subcontent">Enter a comma after each tag</p>
           </div>
 
           <!-- Submit -->
-          <div class="col-12 mt-4 d-flex align-items-center">
-            <button type="submit" class="btn btn-primary px-4 px-xl-5">
-              <!-- :disabled="v$.form.$invalid || loading" -->
-              Login
+          <div class="col-12 mt-2 d-flex align-items-center">
+            <button
+              type="submit"
+              class="btn btn-primary px-4 px-xl-5"
+              :disabled="v$.form.$invalid || loading"
+            >
+              Create
             </button>
-            <div>
-              <p class="ms-3 my-0">
-                or
-                <router-link class="ms-3 text_link" to="/signup">Sign up</router-link>
-              </p>
-            </div>
           </div>
         </form>
       </div>
@@ -206,16 +321,13 @@ const handleRemoveUploadImage = () => {
 </template>
 
 <style scoped lang="scss">
+@import "@/scss/form.scss";
+
 .wrapper {
   min-height: calc(100vh - 56px);
 }
 
-.form_box {
-  width: 90%;
-  min-height: 550px;
-  background-color: #fff;
-}
-
+// Image upload
 .drag_box {
   height: 85%;
   width: 80%;
@@ -251,38 +363,8 @@ const handleRemoveUploadImage = () => {
   color: var(--text-sub-content);
 }
 
-.text_link {
-  color: var(--color-mint);
-  text-decoration: none;
-}
-
-.text_link:hover {
-  color: var(--color-mint-hight);
-  text-decoration: underline;
-}
-
-.btn-primary {
-  background-color: var(--color-mint);
-  border-color: var(--color-mint);
-}
-
-.btn-primary:hover {
-  background-color: var(--color-mint-hight);
-  border-color: var(--scolor-mint-hight);
-}
-
-.input-errors {
-  color: var(--color-grapefruit);
-}
-
-.error-msg {
+.text_subcontent {
+  color: var(--text-sub-content);
   font-size: smaller;
-}
-
-@media (min-width: 1024px) {
-  .form_box {
-    width: 70%;
-    height: 550px;
-  }
 }
 </style>

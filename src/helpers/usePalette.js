@@ -20,7 +20,6 @@ export const usePalette = () => {
             // Get primary color
             ColorThief.getColor(reader.result).then(color => {
                 primaryColor.value = getToneColor(rgbToHex(color[0], color[1], color[2]));
-                console.log("🚀 ~ file: usePalette.js ~ line 23 ~ ColorThief.getColor ~ rgbToHex(color[0], color[1], color[2])", rgbToHex(color[0], color[1], color[2]))
             })
 
             // Get secondary & tertiary color

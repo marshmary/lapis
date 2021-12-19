@@ -1,6 +1,19 @@
 import axios from 'axios';
 import { ref } from 'vue';
 
+// Add a request interceptor
+axios.defaults.withCredentials = true;
+axios.interceptors.request.use(
+    function (config) {
+        var token = localStorage.getItem("accessToken");
+        config.headers.Authorization = token ? `Bearer ${token}` : "";
+        return config;
+    },
+    function (error) {
+        return Promise.reject(error);
+    }
+);
+
 export const useFetch = (url, options = {}) => {
     const data = ref(null);
     const response = ref(null);

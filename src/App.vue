@@ -48,6 +48,10 @@ body {
   border-top-right-radius: 8px;
 }
 
+.tags-input-wrapper-default {
+  padding: 0.5rem 0.75rem !important;
+}
+
 :root {
   --color-grapefruit: #eb5562;
   --color-bittersweet: #fb6c50;
