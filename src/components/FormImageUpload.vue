@@ -6,13 +6,13 @@ import TheModal from "@/components/TheModal.vue";
 import { useCheckFile } from "@/helpers/useCheckFile";
 import { useFetch } from "@/composable/useFetch";
 import { usePalette } from "@/helpers/usePalette";
-// import { useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 const modal = ref(undefined); // Modal to show error
 const loading = ref(false); // Loading value
 const hiddeninput = ref(undefined); // Input for load iamge
 const uploadImage = ref(null); // Link to show image
-// const router = useRouter();
+const router = useRouter();
 const { validateMessage, checkFile } = useCheckFile(); // Input file checker
 const { primaryColor, secondaryColor, tertiaryColor, getCollorsFromFile } = usePalette(); // Get image palette
 
@@ -167,8 +167,8 @@ const onSubmit = async () => {
       state.modal.title = "Success";
       state.modal.body = res.message;
       state.modal.isError = false;
-      // clearFormData();
       modal.value.showModal();
+      clearFormData();
     },
     onError: (errors) => {
       loading.value = false;
@@ -181,9 +181,9 @@ const onSubmit = async () => {
   });
 };
 
-// const clearFormData = () => {
-//   router.go();
-// };
+const clearFormData = () => {
+  router.go();
+};
 </script>
 
 <template>

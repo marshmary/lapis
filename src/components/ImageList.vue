@@ -12,11 +12,7 @@
   </section>
 
   <section v-else>
-    <div
-      class="row mx-0 scrolling_component pt-4"
-      ref="scrollComponent"
-      data-masonry="{'percentPosition': true }"
-    >
+    <div class="row mx-0 pt-4" data-masonry='{"percentPosition": true }'>
       <div
         class="col-12 col-md-4 col-lg-3 col-xxl-2 mb-4"
         v-for="image in data.payload"
@@ -52,4 +48,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

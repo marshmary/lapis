@@ -48,8 +48,8 @@
 </template>
 
 <script>
-// import axios as axiosDownloadImageOnly from "axios";
 import moment from "moment";
+import Masonry from "masonry-layout";
 
 export default {
   name: "ImageListItem",
@@ -79,19 +79,18 @@ export default {
           URL.revokeObjectURL(link.href);
           link.remove();
         });
-
-      // axios.get(url, { responseType: "blob" }).then((response) => {
-      //   const blob = response.data;
-      //   const link = document.createElement("a");
-      //   link.href = URL.createObjectURL(blob);
-      //   link.download = blob.size;
-      //   link.click();
-      //   URL.revokeObjectURL(link.href);
-      // });
     },
   },
   beforeCreate() {
     this.moment = moment;
+  },
+  mounted() {
+    // initialize masonry
+    var row = document.querySelector("[data-masonry]");
+    new Masonry(row, {
+      // options
+      percentPosition: true,
+    });
   },
 };
 </script>
