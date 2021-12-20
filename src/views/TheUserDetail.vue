@@ -1,12 +1,12 @@
-<template>
-    <h3>This is User detail page</h3>
-</template>
-
-<script>
-export default {
-    name: "TheUserDetail",
-};
+<script setup>
+import ContentWrapper from "@/components/ContentWrapper.vue";
+import CommingSoon from "@/components/CommingSoon.vue";
 </script>
 
-<style>
-</style>
+<template>
+  <content-wrapper>
+    <comming-soon></comming-soon>
+  </content-wrapper>
+</template>
+
+<style></style>
