@@ -1,9 +1,13 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
+// Tags input
+import VoerroTagsInput from '@voerro/vue-tagsinput';
+import '@voerro/vue-tagsinput/dist/style.css'
+
 // fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret, faClock, faDownload, faTags, faImage, faFileImage, faExclamationCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret, faClock, faDownload, faTags, faImage, faFileImage, faExclamationCircle, faCheckCircle, faArrowCircleUp, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // bootstrap lib
@@ -17,10 +21,11 @@ import router from './router'
 import { createPinia } from 'pinia';
 
 // add fontawesome icon to use
-library.add(faUserSecret, faClock, faDownload, faTags, faImage, faFileImage, faExclamationCircle, faCheckCircle)
+library.add(faUserSecret, faClock, faDownload, faTags, faImage, faFileImage, faExclamationCircle, faCheckCircle, faArrowCircleUp, faTrash)
 
 createApp(App)
     .use(createPinia())
     .use(router)
-    .component("font-awesome-icon", <FontAwesomeIcon class="me-1" fixed-width></FontAwesomeIcon>)
+    .component("font-awesome-icon", <FontAwesomeIcon fixed-width></FontAwesomeIcon>)
+    .component("tags-input", VoerroTagsInput)
     .mount('#app')

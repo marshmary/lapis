@@ -1,12 +1,12 @@
 <script setup>
 import ContentWrapper from "@/components/ContentWrapper.vue";
-import CommingSoon from "@/components/CommingSoon.vue";
+import FormImageUpload from "@/components/FormImageUpload.vue";
 </script>
 
 <template>
   <content-wrapper>
-    <comming-soon></comming-soon>
+    <form-image-upload />
   </content-wrapper>
 </template>
 
-<style></style>
+<style lang="scss" scoped></style>

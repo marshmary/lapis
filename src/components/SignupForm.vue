@@ -198,51 +198,12 @@ export default {
 };
 </script>
 
-<style scoped>
-.form_box {
-  width: 90%;
-  min-height: 550px;
-  background-color: #fff;
-}
+<style lang="scss" scoped>
+@import "@/scss/form.scss";
 
 .form_image {
   background-image: v-bind(image);
   background-size: cover;
   background-position-y: 15%;
-}
-
-.text_link {
-  color: var(--color-mint);
-  text-decoration: none;
-}
-
-.text_link:hover {
-  color: var(--color-mint-hight);
-  text-decoration: underline;
-}
-
-.btn-primary {
-  background-color: var(--color-mint);
-  border-color: var(--color-mint);
-}
-
-.btn-primary:hover {
-  background-color: var(--color-mint-hight);
-  border-color: var(--color-mint-hight);
-}
-
-.input-errors {
-  color: var(--color-grapefruit);
-}
-
-.error-msg {
-  font-size: smaller;
-}
-
-@media (min-width: 1024px) {
-  .form_box {
-    width: 70%;
-    height: 550px;
-  }
 }
 </style>

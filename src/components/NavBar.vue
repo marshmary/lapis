@@ -1,10 +1,10 @@
 <template>
   <nav
-    class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"
+    class="navbar navbar-expand-md fixed-top shadow_app"
     aria-label="Fourth navbar example"
   >
     <div class="container-fluid my-0">
-      <router-link class="navbar-brand ms-3" to="/">Lapis</router-link>
+      <router-link class="navbar-brand ms-3 text_color" to="/">Lapis</router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -14,43 +14,43 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon text_color"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarsExample04">
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
           <li class="nav-item mx-3">
-            <router-link class="nav-link" to="/">Home</router-link>
+            <router-link class="nav-link text_color" to="/">Home</router-link>
           </li>
           <li class="nav-item mx-3">
-            <router-link class="nav-link" to="/about">About</router-link>
+            <router-link class="nav-link text_color" to="/about">About</router-link>
           </li>
 
           <!-- Login & Logout buttn -->
           <template v-if="userStore.isEmpty">
             <li class="nav-item mx-3">
-              <router-link class="nav-link" to="/login">Login</router-link>
+              <router-link class="nav-link text_color" to="/login">Login</router-link>
             </li>
             <li class="nav-item mx-3">
-              <router-link class="nav-link" to="/signup">Sign up</router-link>
+              <router-link class="nav-link text_color" to="/signup">Sign up</router-link>
             </li>
           </template>
 
           <!-- Profile -->
           <template v-else>
             <li class="nav-item mx-3">
-              <router-link class="nav-link" to="/upload">Upload</router-link>
+              <router-link class="nav-link text_color" to="/upload">Upload</router-link>
             </li>
             <li class="nav-item mx-3">
               <div class="btn-group">
                 <a
-                  class="nav-link dropdown-toggle"
+                  class="nav-link dropdown-toggle text_color"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
                   <img :src="userStore.avatar" alt="user avatar" class="user_avatar" />
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end bg-dark">
+                <ul class="dropdown-menu dropdown-menu-end">
                   <li>
                     <router-link
                       class="dropdown-item text_color"
@@ -96,6 +96,7 @@ const logout = () => {
 <style scoped>
 nav {
   max-height: 56px;
+  background-color: var(--bg);
 }
 
 .fixed-top {
@@ -123,6 +124,6 @@ nav {
 }
 
 .text_color {
-  color: var(--text-content);
+  color: var(--text-content) !important;
 }
 </style>

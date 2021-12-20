@@ -1,0 +1,40 @@
+.form_box {
+  width: 90%;
+  min-height: 550px;
+  background-color: #fff;
+}
+
+.text_link {
+  color: var(--color-mint);
+  text-decoration: none;
+}
+
+.text_link:hover {
+  color: var(--color-mint-hight);
+  text-decoration: underline;
+}
+
+.btn-primary {
+  background-color: var(--color-mint);
+  border-color: var(--color-mint);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-mint-hight);
+  border-color: var(--color-mint-hight);
+}
+
+.input-errors {
+  color: var(--color-grapefruit);
+}
+
+.error-msg {
+  font-size: smaller;
+}
+
+@media (min-width: 1024px) {
+  .form_box {
+    width: 70%;
+    height: 550px;
+  }
+}

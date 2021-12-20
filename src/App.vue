@@ -31,7 +31,7 @@ body {
 }
 
 .shadow_app {
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.08);
 }
 
 .border_app {
@@ -48,6 +48,10 @@ body {
   border-top-right-radius: 8px;
 }
 
+.tags-input-wrapper-default {
+  padding: 0.5rem 0.75rem !important;
+}
+
 :root {
   --color-grapefruit: #eb5562;
   --color-bittersweet: #fb6c50;
@@ -57,11 +61,13 @@ body {
   --color-mint-hight: #34ba9a;
   --color-aqua: #3badd8;
   --color-lavender: #ad93ea;
-  --color-lightgray: #f4f6f9;
+  --color-lightgray: #eeeeef;
+
+  --bg: #fefeff;
 
   --text-heading: #fff;
-  --text-content: #fff;
-  --text-sub-content: #fff;
+  --text-content: #030303;
+  --text-sub-content: #9d9c9d;
 }
 
 .btn,
