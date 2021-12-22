@@ -65,12 +65,17 @@ body {
 
   --bg: #fefeff;
 
-  --text-heading: #fff;
+  --text-heading: #000;
   --text-content: #030303;
   --text-sub-content: #9d9c9d;
+
+  --text-heading-opp: #fff;
+  --text-content-opp: #fff;
+  --text-sub-content-opp: #9d9c9d;
 }
 
 .btn,
+.btn:focus,
 .form-select,
 .form-select:active,
 .form-select:focus,

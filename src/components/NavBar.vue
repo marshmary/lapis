@@ -3,10 +3,10 @@
     class="navbar navbar-expand-md fixed-top shadow_app"
     aria-label="Fourth navbar example"
   >
-    <div class="container-fluid my-0">
+    <div class="container-fluid my-0 px-0">
       <router-link class="navbar-brand ms-3 text_color" to="/">Lapis</router-link>
       <button
-        class="navbar-toggler"
+        class="navbar-toggler me-2"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarsExample04"
@@ -14,13 +14,14 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon text_color"></span>
+        <!-- <span class="navbar-toggler-icon text_color"></span> -->
+        <font-awesome-icon class="navbar-toggler-icon text_color" icon="bars" />
       </button>
 
       <div class="collapse navbar-collapse" id="navbarsExample04">
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
           <li class="nav-item mx-3">
-            <router-link class="nav-link text_color" to="/">Home</router-link>
+            <router-link class="nav-link text_color" to="/">Search</router-link>
           </li>
           <li class="nav-item mx-3">
             <router-link class="nav-link text_color" to="/about">About</router-link>
@@ -125,5 +126,17 @@ nav {
 
 .text_color {
   color: var(--text-content) !important;
+}
+
+.text_color_opposite {
+  color: var(--text-content-opp) !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+
+.navbar-collapse {
+  background-color: var(--bg);
 }
 </style>

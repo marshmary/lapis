@@ -1,20 +1,16 @@
 <template>
   <content-wrapper>
-    <image-list />
+    <image-list :data="data" :loading="loading" :errors="errors" />
   </content-wrapper>
 </template>
 
-<script>
+<script setup>
 import ContentWrapper from "@/components/ContentWrapper.vue";
 import ImageList from "@/components/ImageList.vue";
 
-export default {
-  name: "TheHome",
-  components: {
-    ContentWrapper,
-    ImageList,
-  },
-};
+import { useFetch } from "@/composable/useFetch";
+
+const { data, loading, errors } = useFetch(`${process.env.VUE_APP_BACKEND_API}/images`);
 </script>
 
 <style></style>
