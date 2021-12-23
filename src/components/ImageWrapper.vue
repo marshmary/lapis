@@ -20,10 +20,12 @@ const image = `url(${props.imageurl})`;
 <style lang="scss" scoped>
 .wrapper {
   @include wrapper-height();
+  height: 100vh;
 }
 
 .wrapper_bg {
   @include wrapper-height;
+  height: 100vh;
   @include fix-position();
 
   background-image: v-bind(image);
@@ -40,5 +42,6 @@ const image = `url(${props.imageurl})`;
 .content {
   @include wrapper-height;
   @include fix-position();
+  height: 100vh;
 }
 </style>

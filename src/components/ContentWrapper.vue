@@ -14,6 +14,7 @@ export default {};
   min-height: calc(100vh - 56px);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+  padding-top: 56px;
   /* padding-top: 1rem; */
 }
 

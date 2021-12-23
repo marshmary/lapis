@@ -20,7 +20,6 @@ export default {
 body {
   margin: 0;
   padding: 0;
-  padding-top: 56px;
 }
 
 #app {
@@ -39,13 +38,13 @@ body {
 }
 
 .border_app_left {
-  border-bottom-left-radius: 8px;
-  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px !important;
+  border-top-left-radius: 8px !important;
 }
 
 .border_app_right {
-  border-bottom-right-radius: 8px;
-  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px !important;
+  border-top-right-radius: 8px !important;
 }
 
 .tags-input-wrapper-default {

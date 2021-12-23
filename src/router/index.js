@@ -35,7 +35,7 @@ const routes = [
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
-        component: () => import('@/views/TheError.vue')
+        component: () => import('@/views/TheHome.vue')
     }
 ]
 

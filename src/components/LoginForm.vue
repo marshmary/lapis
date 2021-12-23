@@ -66,6 +66,9 @@
             </p>
           </div>
         </div>
+        <div class="col-12 mt-3">
+          <router-link class="text_link" to="/">Back to home</router-link>
+        </div>
       </form>
     </div>
   </div>
