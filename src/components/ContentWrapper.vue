@@ -4,8 +4,21 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { useSearchStore } from "@/store/useSearch";
+import { watch } from "vue";
+
+const searchStore = useSearchStore();
+
+let wrapper_padding = "56px";
+
+watch(searchStore, () => {
+  if (!searchStore.isEmpty) {
+    wrapper_padding = "112px";
+  } else {
+    wrapper_padding = "56px";
+  }
+});
 </script>
 
 <style scoped>
@@ -14,8 +27,7 @@ export default {};
   min-height: calc(100vh - 56px);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
-  padding-top: 56px;
-  /* padding-top: 1rem; */
+  margin-top: v-bind(wrapper_padding);
 }
 
 @media only screen and (min-width: 768px) {

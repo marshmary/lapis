@@ -29,6 +29,9 @@
               type="search"
               class="form-control border_app_right"
               placeholder="Search images"
+              @focus="onFocus"
+              @blur="outFocus"
+              @keydown.enter.prevent="onEnter"
             />
           </div>
         </form>
@@ -84,12 +87,14 @@ import { watchEffect, ref } from "vue";
 
 // Store
 import { useUserStore } from "@/store/useUser";
+import { useSearchStore } from "@/store/useSearch";
 
 // Router
 import { useRouter } from "vue-router";
 
 // Declare router & store
 const userStore = useUserStore();
+const searchStore = useSearchStore();
 const router = useRouter();
 
 const isShow = ref(true);
@@ -113,6 +118,13 @@ const logout = () => {
 
   // Redirect to Home
   router.push("/");
+};
+
+// Tags input
+const onEnter = (e) => {
+  // console.log("enter ", e.target.value);
+  searchStore.setTags(e.target.value);
+  e.target.value = "";
 };
 </script>
 
