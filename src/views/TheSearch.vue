@@ -31,27 +31,27 @@ const generateAPIUrl = (
   orientation = "",
   color = { primary: "", secondary: "", tertiary: "" }
 ) => {
-  let apiUrl = `${process.env.VUE_APP_BACKEND_API}/images?pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`;
+  let localApiUrl = `${process.env.VUE_APP_BACKEND_API}/images?pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`;
 
   if (tags.length > 0) {
     for (const key in tags) {
-      apiUrl += `&tags=${tags[key]}`;
+      localApiUrl += `&tags=${tags[key]}`;
     }
   }
   if (orientation !== "") {
-    apiUrl += `&orientation=${orientation}`;
+    localApiUrl += `&orientation=${orientation}`;
   }
   if (color.primary !== "") {
-    apiUrl += `&primaryColor=${color.primary}`;
+    localApiUrl += `&primaryColor=${color.primary}`;
   }
   if (color.secondary !== "") {
-    apiUrl += `&secondaryColor=${color.secondary}`;
+    localApiUrl += `&secondaryColor=${color.secondary}`;
   }
   if (color.tertiary !== "") {
-    apiUrl += `&tertiaryColor=${color.tertiary}`;
+    localApiUrl += `&tertiaryColor=${color.tertiary}`;
   }
 
-  return apiUrl;
+  return localApiUrl;
 };
 
 const RemovePageNumberAndPageSizeFromUrl = (api) => {
@@ -112,6 +112,16 @@ watch(searchStore, () => {
     searchStore.orientation,
     searchStore.color
   );
+
+  // Re-generate url when diff url
+  if (oldApiUrl.value !== RemovePageNumberAndPageSizeFromUrl(apiUrl.value)) {
+    pageNumber.value = 1;
+    apiUrl.value = generateAPIUrl(
+      searchStore.tags,
+      searchStore.orientation,
+      searchStore.color
+    );
+  }
 
   // If not first time run then fetch
   if (initialFetch.value === true) {
