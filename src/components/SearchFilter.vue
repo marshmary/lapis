@@ -1,5 +1,6 @@
 <script setup>
 import { useSearchStore } from "@/store/useSearch";
+import { TONES } from "@/helpers/Constants";
 
 const searchStore = useSearchStore();
 </script>
@@ -48,16 +49,17 @@ const searchStore = useSearchStore();
         id="dropdownOrientation"
         data-bs-toggle="dropdown"
         aria-expanded="false"
+        >{{
+          searchStore.orientation === "" ? "Any orientation" : searchStore.orientation
+        }}</a
       >
-        {{ searchStore.orientation === "" ? "Any orientation" : searchStore.orientation }}
-      </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownOrientation">
         <li @click="searchStore.setOrientation('')">
           <a class="dropdown-item">
             <p class="m-0 ms-2">Any orientation</p>
           </a>
         </li>
-        <li @click="searchStore.setOrientation('Landscape')">
+        <li @click="searchStore.setOrientation('Horizontal')">
           <a class="dropdown-item" href="#">
             <div class="d-flex align-items-center">
               <div class="d-flex align-items-center px-2">
@@ -76,7 +78,7 @@ const searchStore = useSearchStore();
             </div>
           </a>
         </li>
-        <li @click="searchStore.setOrientation('Portrait')">
+        <li @click="searchStore.setOrientation('Vertical')">
           <a class="dropdown-item" href="#">
             <div class="d-flex align-items-center px-2">
               <div
@@ -120,24 +122,90 @@ const searchStore = useSearchStore();
         class="dropdown-toggle text-link text_content"
         href="#"
         role="button"
-        id="dropdownMenuLink"
+        id="dropdownColors"
         data-bs-toggle="dropdown"
         aria-expanded="false"
         >{{ searchStore.isColorEmpty ? "Any color" : "Selected color" }}</a
       >
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownColors">
         <li>
-          <a class="dropdown-item">
+          <a class="dropdown-item" @click="searchStore.removeColors">
             <p class="m-0 ms-2">Any color</p>
           </a>
         </li>
+        <!-- Primary color -->
         <li>
-          <!-- <a class="dropdown-item" href="#">Another action</a> -->
-          <div>
-            <span class="badge rounded-pill bg-secondary me-2">Any</span>
-            <span class="badge rounded-pill bg-secondary me-2">Any</span>
-            <span class="badge rounded-pill bg-secondary me-2">Any</span>
-            <span class="badge rounded-pill bg-secondary me-2">Any</span>
+          <div class="color_list">
+            <div class="ms-2">Primary tones</div>
+            <div class="d-flex flex-wrap mt-2 ms-1">
+              <!-- Color list from Constants -->
+              <div
+                v-for="tone in TONES"
+                :key="tone"
+                class="color_items m-1 d-flex align-items-center justify-content-center"
+                :class="searchStore.color.primary === tone ? 'selected' : ''"
+                :style="{ backgroundColor: tone }"
+                @click="searchStore.setPrimaryColor(tone)"
+              >
+                <!-- Check icon on selected color - Change color to white when background is black -->
+                <font-awesome-icon
+                  v-if="searchStore.color.primary === tone"
+                  icon="check"
+                  style="font-size: 0.5rem"
+                  :style="tone === '#4D4C4C' ? { color: '#fff' } : ''"
+                />
+              </div>
+            </div>
+          </div>
+        </li>
+        <!-- Secondary color -->
+        <li>
+          <div class="color_list">
+            <div class="ms-2">Secondary tones</div>
+            <div class="d-flex flex-wrap mt-2 ms-1">
+              <!-- Color list from Constants -->
+              <div
+                v-for="tone in TONES"
+                :key="tone"
+                class="color_items m-1 d-flex align-items-center justify-content-center"
+                :class="searchStore.color.secondary === tone ? 'selected' : ''"
+                :style="{ backgroundColor: tone }"
+                @click="searchStore.setSecondaryColor(tone)"
+              >
+                <!-- Check icon on selected color - Change color to white when background is black -->
+                <font-awesome-icon
+                  v-if="searchStore.color.secondary === tone"
+                  icon="check"
+                  style="font-size: 0.5rem"
+                  :style="tone === '#4D4C4C' ? { color: '#fff' } : ''"
+                />
+              </div>
+            </div>
+          </div>
+        </li>
+        <!-- Tertiary color -->
+        <li>
+          <div class="color_list">
+            <div class="ms-2">Tertiary tones</div>
+            <div class="d-flex flex-wrap mt-2 ms-1">
+              <!-- Color list from Constants -->
+              <div
+                v-for="tone in TONES"
+                :key="tone"
+                class="color_items m-1 d-flex align-items-center justify-content-center"
+                :class="searchStore.color.tertiary === tone ? 'selected' : ''"
+                :style="{ backgroundColor: tone }"
+                @click="searchStore.setTertiaryColor(tone)"
+              >
+                <!-- Check icon on selected color - Change color to white when background is black -->
+                <font-awesome-icon
+                  v-if="searchStore.color.tertiary === tone"
+                  icon="check"
+                  style="font-size: 0.5rem"
+                  :style="tone === '#4D4C4C' ? { color: '#fff' } : ''"
+                />
+              </div>
+            </div>
           </div>
         </li>
       </ul>
@@ -156,8 +224,27 @@ const searchStore = useSearchStore();
   background-color: var(--bg);
 }
 
+.dropdown {
+  height: inherit;
+}
+
 .dropdown-toggle::after {
   margin-left: 0.5rem;
+}
+
+.color_list {
+  padding: 0.25rem 1rem;
+}
+
+.color_items {
+  border-radius: 50%;
+  height: 1rem;
+  width: 1rem;
+  border: 0.01px solid rgba(0, 0, 0, 0.1);
+}
+
+.color_items.selected {
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
 
 .text-link {
@@ -166,5 +253,9 @@ const searchStore = useSearchStore();
 
 .text-link:hover {
   color: var(--text-content);
+}
+
+.text_op {
+  color: #fff;
 }
 </style>

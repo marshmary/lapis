@@ -57,6 +57,11 @@ export const useSearchStore = defineStore("searchStore", {
             this.color.primary = "";
             this.color.secondary = "";
             this.color.tertiary = "";
+        },
+        removeColors() {
+            this.color.primary = "";
+            this.color.secondary = "";
+            this.color.tertiary = "";
         }
     }
 })

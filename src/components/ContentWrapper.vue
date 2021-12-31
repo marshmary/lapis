@@ -5,20 +5,13 @@
 </template>
 
 <script setup>
-import { useSearchStore } from "@/store/useSearch";
-import { watch } from "vue";
+import { defineProps } from "@vue/runtime-core";
 
-const searchStore = useSearchStore();
-
-let wrapper_padding = "56px";
-
-watch(searchStore, () => {
-  if (!searchStore.isEmpty) {
-    wrapper_padding = "112px";
-  } else {
-    wrapper_padding = "56px";
-  }
+const props = defineProps({
+  marginTop: String,
 });
+
+let wrapper_margin_top = !props.marginTop ? "56px" : props.marginTop;
 </script>
 
 <style scoped>
@@ -27,7 +20,7 @@ watch(searchStore, () => {
   min-height: calc(100vh - 56px);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
-  margin-top: v-bind(wrapper_padding);
+  margin-top: v-bind(wrapper_margin_top);
 }
 
 @media only screen and (min-width: 768px) {

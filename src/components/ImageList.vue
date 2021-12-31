@@ -12,11 +12,7 @@
   </section>
 
   <section v-else>
-    <div
-      id="imagecontainer"
-      class="row mx-0 pt-4"
-      data-masonry='{"percentPosition": true }'
-    >
+    <div class="row mx-0 pt-4 imagecontainer" data-masonry>
       <div
         class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-4"
         v-for="image in props.data.payload"
@@ -45,7 +41,7 @@ const props = defineProps({
 });
 
 onUpdated(() => {
-  imagesLoaded(document.querySelector("#imagecontainer"), function () {
+  imagesLoaded(document.querySelector(".imagecontainer"), function () {
     if (props.loading === false) {
       var row = document.querySelector("[data-masonry]");
       new Masonry(row, {

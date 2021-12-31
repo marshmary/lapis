@@ -20,10 +20,15 @@ export const useFetch = (url, options = {}) => {
     const errors = ref(null);
     const loading = ref(false);
 
-    const fetch = async () => {
+    const fetch = async (localUrl = "") => {
         loading.value = true;
         try {
-            const res = await axios(url, { ...options, data: options.body });
+            let res = null;
+            if (localUrl === "") {
+                res = await axios(url, { ...options, data: options.body });
+            } else {
+                res = await axios(localUrl, { ...options, data: options.body });
+            }
             response.value = res;
             data.value = res.data;
 

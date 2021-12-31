@@ -122,9 +122,9 @@ const logout = () => {
 
 // Tags input
 const onEnter = (e) => {
-  // console.log("enter ", e.target.value);
   searchStore.setTags(e.target.value);
   e.target.value = "";
+  router.push("/search");
 };
 </script>
 
