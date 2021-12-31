@@ -1,13 +1,13 @@
 <template>
   <search-filter />
   <content-wrapper marginTop="112px">
-    <image-list :data="data" :loading="loading" :errors="errors" />
+    <image-list :data="images" :loading="loading" :errors="errors" />
   </content-wrapper>
 </template>
 
 <script setup>
 // Vue
-import { ref, watch } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 
 // Component
 import ContentWrapper from "@/components/ContentWrapper.vue";
@@ -18,51 +18,146 @@ import { useSearchStore } from "@/store/useSearch";
 
 const searchStore = useSearchStore();
 
-const apiUrl = ref("");
+const apiUrl = ref(""); // url for fetching
 const pageNumber = ref(1);
-const pageSize = ref(24);
+const pageSize = ref(20);
+const pageNumberLimit = ref(1);
+const images = ref([]); //Image list
+const initialFetch = ref(false); // Prevent dupplicate fetch when moute
+const oldApiUrl = ref("");
 
 const generateAPIUrl = (
   tags = [],
   orientation = "",
   color = { primary: "", secondary: "", tertiary: "" }
 ) => {
-  let apiUrl = `${process.env.VUE_APP_BACKEND_API}/images?pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`;
+  let localApiUrl = `${process.env.VUE_APP_BACKEND_API}/images?pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`;
 
   if (tags.length > 0) {
     for (const key in tags) {
-      apiUrl += `&tags=${tags[key]}`;
+      localApiUrl += `&tags=${tags[key]}`;
     }
   }
   if (orientation !== "") {
-    apiUrl += `&orientation=${orientation}`;
+    localApiUrl += `&orientation=${orientation}`;
   }
   if (color.primary !== "") {
-    console.log("🚀 ~ file: TheSearch.vue ~ line 42 ~ color.primary", color.primary);
-    apiUrl += `&primaryColor=${color.primary}`;
+    localApiUrl += `&primaryColor=${color.primary}`;
   }
   if (color.secondary !== "") {
-    console.log("🚀 ~ file: TheSearch.vue ~ line 46 ~ color.secondary", color.secondary);
-    apiUrl += `&secondaryColor=${color.secondary}`;
+    localApiUrl += `&secondaryColor=${color.secondary}`;
   }
   if (color.tertiary !== "") {
-    console.log("🚀 ~ file: TheSearch.vue ~ line 50 ~ color.tertiary", color.tertiary);
-    apiUrl += `&tertiaryColor=${color.tertiary}`;
+    localApiUrl += `&tertiaryColor=${color.tertiary}`;
   }
 
-  return apiUrl;
+  return localApiUrl;
 };
 
-const { data, loading, errors, fetch } = useFetch(generateAPIUrl(searchStore.tags));
+const RemovePageNumberAndPageSizeFromUrl = (api) => {
+  return api.replace(`pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`, "");
+};
 
+// First loading
+const { loading, errors } = useFetch(generateAPIUrl(searchStore.tags), {
+  onCompleted: (res) => {
+    // Push new images to array
+    images.value.push(...res.payload);
+
+    // Set maxPageLimit
+    pageNumberLimit.value =
+      res.totalRecord % pageSize.value === 0
+        ? Math.floor(res.totalRecord / pageSize.value)
+        : Math.floor(res.totalRecord / pageSize.value) + 1;
+
+    // Prevent duplicate fetch when moute
+    initialFetch.value = true;
+
+    // Compare API url for infinite scroll
+    oldApiUrl.value = RemovePageNumberAndPageSizeFromUrl(apiUrl.value);
+  },
+});
+
+const searchAndLoadMoreImage = (api) => {
+  useFetch(api, {
+    onCompleted: (res) => {
+      // Add more images when the same fetch url
+      if (oldApiUrl.value === RemovePageNumberAndPageSizeFromUrl(apiUrl.value)) {
+        images.value.push(...res.payload);
+      } else {
+        // If not replace with new data
+        images.value = res.payload;
+
+        // Save old url for compare
+        oldApiUrl.value = RemovePageNumberAndPageSizeFromUrl(apiUrl.value);
+
+        // Reset page Number
+        pageNumber.value = 1;
+
+        // Set maxPageLimit
+        pageNumberLimit.value =
+          res.totalRecord % pageSize.value === 0
+            ? Math.floor(res.totalRecord / pageSize.value)
+            : Math.floor(res.totalRecord / pageSize.value) + 1;
+      }
+    },
+  });
+};
+
+// Re-Fetch when ever user change search filter
 watch(searchStore, () => {
+  // Generate new url for fetch
   apiUrl.value = generateAPIUrl(
     searchStore.tags,
     searchStore.orientation,
     searchStore.color
   );
-  fetch(apiUrl.value);
+
+  // Re-generate url when diff url
+  if (oldApiUrl.value !== RemovePageNumberAndPageSizeFromUrl(apiUrl.value)) {
+    pageNumber.value = 1;
+    apiUrl.value = generateAPIUrl(
+      searchStore.tags,
+      searchStore.orientation,
+      searchStore.color
+    );
+  }
+
+  // If not first time run then fetch
+  if (initialFetch.value === true) {
+    searchAndLoadMoreImage(apiUrl.value);
+  }
 });
+
+// Infinite scroll event and re-fetch data
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+const handleScroll = () => {
+  if (window.innerHeight + window.scrollY == document.body.offsetHeight + 112) {
+    loadMoreImages();
+  }
+};
+
+const loadMoreImages = () => {
+  if (pageNumber.value < pageNumberLimit.value) {
+    pageNumber.value++;
+
+    // Generate new url for fetch
+    apiUrl.value = generateAPIUrl(
+      searchStore.tags,
+      searchStore.orientation,
+      searchStore.color
+    );
+
+    searchAndLoadMoreImage(apiUrl.value);
+  }
+};
 </script>
 
 <style></style>

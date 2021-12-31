@@ -1,6 +1,7 @@
 <template>
   <section v-if="props.errors">
-    <p>Unable to find data</p>
+    <!-- <p>Unable to find data</p> -->
+    <not-found />
   </section>
 
   <section v-else-if="props.loading">
@@ -11,16 +12,20 @@
     </div>
   </section>
 
-  <section v-else>
+  <section v-else-if="props.data.length > 0">
     <div class="row mx-0 pt-4 imagecontainer" data-masonry>
       <div
         class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-4"
-        v-for="image in props.data.payload"
+        v-for="image in props.data"
         :key="image.id"
       >
         <image-list-item :image="image" />
       </div>
     </div>
+  </section>
+
+  <section v-else>
+    <not-found />
   </section>
 </template>
 
@@ -33,9 +38,10 @@ import imagesLoaded from "imagesloaded";
 // components
 import ImageListItemLoading from "@/components/ImageListItemLoading.vue";
 import ImageListItem from "@/components/ImageListItem.vue";
+import NotFound from "@/components/NotFound.vue";
 
 const props = defineProps({
-  data: Object,
+  data: Array,
   loading: Boolean,
   errors: Object,
 });

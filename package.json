@@ -27,8 +27,6 @@
     "node-vibrant": "^3.1.6",
     "pinia": "^2.0.6",
     "quantize": "^1.0.2",
-    "smart-tagz": "^0.3.1",
-    "v3-infinite-loading": "^1.0.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12"
   },
