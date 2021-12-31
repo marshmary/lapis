@@ -1,31 +1,42 @@
 <template>
   <nav
+    v-if="isShow"
     class="navbar navbar-expand-md fixed-top shadow_app"
     aria-label="Fourth navbar example"
   >
-    <div class="container-fluid my-0">
+    <div class="container-fluid my-0 px-0">
       <router-link class="navbar-brand ms-3 text_color" to="/">Lapis</router-link>
       <button
-        class="navbar-toggler"
+        class="navbar-toggler me-2"
         type="button"
         data-bs-toggle="collapse"
-        data-bs-target="#navbarsExample04"
-        aria-controls="navbarsExample04"
+        data-bs-target="#navbarshidden"
+        aria-controls="navbarshidden"
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon text_color"></span>
+        <!-- <span class="navbar-toggler-icon text_color"></span> -->
+        <font-awesome-icon class="navbar-toggler-icon text_color" icon="bars" />
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarsExample04">
-        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-          <li class="nav-item mx-3">
-            <router-link class="nav-link text_color" to="/">Home</router-link>
-          </li>
-          <li class="nav-item mx-3">
-            <router-link class="nav-link text_color" to="/about">About</router-link>
-          </li>
+      <div class="collapse navbar-collapse" id="navbarshidden">
+        <form class="search_form">
+          <div class="input-group">
+            <span class="input-group-text px-3 border_app_left" id="basic-addon1">
+              <font-awesome-icon class="text_icon" icon="search" />
+            </span>
+            <input
+              type="search"
+              class="form-control border_app_right"
+              placeholder="Search images"
+              @focus="onFocus"
+              @blur="outFocus"
+              @keydown.enter.prevent="onEnter"
+            />
+          </div>
+        </form>
 
+        <ul class="navbar-nav mb-2 mb-md-0 ms-auto">
           <!-- Login & Logout buttn -->
           <template v-if="userStore.isEmpty">
             <li class="nav-item mx-3">
@@ -72,15 +83,32 @@
 </template>
 
 <script setup>
+import { watchEffect, ref } from "vue";
+
 // Store
 import { useUserStore } from "@/store/useUser";
+import { useSearchStore } from "@/store/useSearch";
 
 // Router
 import { useRouter } from "vue-router";
 
 // Declare router & store
 const userStore = useUserStore();
+const searchStore = useSearchStore();
 const router = useRouter();
+
+const isShow = ref(true);
+
+watchEffect(() => {
+  if (
+    router.currentRoute.value.name === "Login" ||
+    router.currentRoute.value.name === "Signup"
+  ) {
+    isShow.value = false;
+  } else {
+    isShow.value = true;
+  }
+});
 
 // Logout method
 const logout = () => {
@@ -90,6 +118,13 @@ const logout = () => {
 
   // Redirect to Home
   router.push("/");
+};
+
+// Tags input
+const onEnter = (e) => {
+  searchStore.setTags(e.target.value);
+  e.target.value = "";
+  router.push("/search");
 };
 </script>
 
@@ -125,5 +160,28 @@ nav {
 
 .text_color {
   color: var(--text-content) !important;
+}
+
+.text_color_opposite {
+  color: var(--text-content-opp) !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+
+.navbar-collapse {
+  background-color: var(--bg);
+}
+
+.search_form {
+  width: 35rem;
+  margin-left: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .search_form {
+    width: 20rem;
+  }
 }
 </style>

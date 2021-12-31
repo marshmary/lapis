@@ -4,8 +4,14 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { defineProps } from "@vue/runtime-core";
+
+const props = defineProps({
+  marginTop: String,
+});
+
+let wrapper_margin_top = !props.marginTop ? "56px" : props.marginTop;
 </script>
 
 <style scoped>
@@ -14,7 +20,7 @@ export default {};
   min-height: calc(100vh - 56px);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
-  /* padding-top: 1rem; */
+  margin-top: v-bind(wrapper_margin_top);
 }
 
 @media only screen and (min-width: 768px) {

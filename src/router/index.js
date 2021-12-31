@@ -23,6 +23,11 @@ const routes = [
         component: () => import('@/views/TheSignup.vue')
     },
     {
+        path: '/search',
+        name: "Search",
+        component: () => import('@/views/TheSearch.vue')
+    },
+    {
         path: '/user/:id',
         name: 'UserDetail',
         component: () => import('@/views/TheUserDetail.vue')
@@ -35,7 +40,7 @@ const routes = [
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
-        component: () => import('@/views/TheError.vue')
+        component: () => import('@/views/TheHome.vue')
     }
 ]
 

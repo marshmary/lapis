@@ -105,6 +105,9 @@
             </p>
           </div>
         </div>
+        <div class="col-12 mt-3">
+          <router-link class="text_link" to="/">Back to home</router-link>
+        </div>
       </form>
     </div>
     <div class="d-none d-sm-block col-6 form_image border_app_right"></div>

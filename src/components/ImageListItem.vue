@@ -1,28 +1,32 @@
 <template>
   <div class="card shadow_app border_app">
     <!-- Image -->
-    <img :src="image.medium" class="card-img-top border_app_top" alt="image" />
-
+    <img
+      @load="onImageLoad"
+      :src="image.medium"
+      class="card-img-top border_app"
+      alt="image"
+    />
     <!-- Content -->
-    <div class="card-body">
+    <div class="card-body border_app">
       <!-- Credit -->
-      <h5 class="card-title">
-        Credit to
+      <h5 class="card-title text-oposite">
+        @
         <a :href="image.credit.sourceUrl" target="_blank" class="credit">{{
           image.credit.author
         }}</a>
       </h5>
 
       <!-- Tag -->
-      <p class="card-text">
+      <!-- <p class="card-text">
         <span>
           <font-awesome-icon icon="tags" />
         </span>
         <span class="tag ms-1" v-for="tag in image.tags" :key="tag">#{{ tag }} {{}}</span>
-      </p>
+      </p> -->
 
       <!-- Size and Orientation -->
-      <p class="card-text">
+      <!-- <p class="card-text">
         <span v-if="image.orientation === 'Horizontal'">
           <font-awesome-icon icon="image" />
         </span>
@@ -31,17 +35,17 @@
         </span>
 
         <span class="ms-1">{{ image.size.width }} x {{ image.size.height }}</span>
-      </p>
+      </p> -->
 
       <!-- Time -->
-      <p class="card-text">
+      <p class="card-text text-oposite">
         <font-awesome-icon icon="clock" />
         <span class="ms-1">{{ this.moment(image.created).fromNow() }}</span>
       </p>
 
       <!-- Download button -->
-      <a class="btn btn-primary" @click.prevent="download(image.hight)">
-        <font-awesome-icon icon="download" />Download
+      <a class="btn btn-primary download_button" @click.prevent="download(image.hight)">
+        <font-awesome-icon icon="download" />
       </a>
     </div>
   </div>
@@ -49,7 +53,6 @@
 
 <script>
 import moment from "moment";
-import Masonry from "masonry-layout";
 
 export default {
   name: "ImageListItem",
@@ -84,21 +87,17 @@ export default {
   beforeCreate() {
     this.moment = moment;
   },
-  mounted() {
-    // initialize masonry
-    var row = document.querySelector("[data-masonry]");
-    new Masonry(row, {
-      // options
-      percentPosition: true,
-    });
-  },
 };
 </script>
 
 <style scoped>
 .credit {
   text-decoration: none;
-  color: var(--color-mint);
+  color: #fff;
+}
+
+.text-oposite {
+  color: #fff;
 }
 
 .tag {
@@ -107,6 +106,42 @@ export default {
 
 .card {
   border: none;
+  position: relative;
+}
+
+.card-img-top {
+  opacity: 1;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+}
+
+.card-body {
+  opacity: 0;
+  transition: 0.5s ease;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(3, 3, 3, 0.42),
+    rgba(3, 3, 3, 0.09),
+    rgba(3, 3, 3, 0.42)
+  );
+}
+
+.card:hover .card-body {
+  opacity: 1;
+}
+
+.download_button {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+}
+
+.card-title {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
 }
 
 .border_app_top {
