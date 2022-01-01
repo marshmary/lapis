@@ -6,6 +6,7 @@ import TheModal from "@/components/TheModal.vue";
 import { useCheckFile } from "@/helpers/useCheckFile";
 import { useFetch } from "@/composable/useFetch";
 import { usePalette } from "@/helpers/usePalette";
+import { useHexColorConfig } from "@/helpers/useHexColorConfig";
 import { useRouter } from "vue-router";
 
 const modal = ref(undefined); // Modal to show error
@@ -147,9 +148,9 @@ const onSubmit = async () => {
 
   let formData = new FormData();
   formData.append("image", state.form.image);
-  formData.append("colors.Primary", state.form.colors.primary);
-  formData.append("colors.Secondary", state.form.colors.secondary);
-  formData.append("colors.Tertiary", state.form.colors.tertiary);
+  formData.append("colors.Primary", useHexColorConfig(state.form.colors.primary));
+  formData.append("colors.Secondary", useHexColorConfig(state.form.colors.secondary));
+  formData.append("colors.Tertiary", useHexColorConfig(state.form.colors.tertiary));
   formData.append("credit.Author", state.form.credit.author);
   formData.append("credit.SourceUrl", state.form.credit.sourceUrl);
   formData.append("credit.SourceUrl", state.form.credit.sourceUrl);

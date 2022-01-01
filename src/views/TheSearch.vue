@@ -15,6 +15,7 @@ import ImageList from "@/components/ImageList.vue";
 import SearchFilter from "@/components/SearchFilter.vue";
 import { useFetch } from "@/composable/useFetch";
 import { useSearchStore } from "@/store/useSearch";
+import { useHexColorConfig } from "@/helpers/useHexColorConfig";
 
 const searchStore = useSearchStore();
 
@@ -42,13 +43,13 @@ const generateAPIUrl = (
     localApiUrl += `&orientation=${orientation}`;
   }
   if (color.primary !== "") {
-    localApiUrl += `&primaryColor=${color.primary}`;
+    localApiUrl += `&primaryColor=${useHexColorConfig(color.primary)}`;
   }
   if (color.secondary !== "") {
-    localApiUrl += `&secondaryColor=${color.secondary}`;
+    localApiUrl += `&secondaryColor=${useHexColorConfig(color.secondary)}`;
   }
   if (color.tertiary !== "") {
-    localApiUrl += `&tertiaryColor=${color.tertiary}`;
+    localApiUrl += `&tertiaryColor=${useHexColorConfig(color.tertiary)}`;
   }
 
   return localApiUrl;
