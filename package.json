@@ -27,6 +27,7 @@
     "node-vibrant": "^3.1.6",
     "pinia": "^2.0.6",
     "quantize": "^1.0.2",
+    "sass": "^1.45.2",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12"
   },
@@ -38,8 +39,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
-    "node-sass": "^5.0.0",
-    "sass-loader": "^10.0.5"
+    "sass-loader": "^10.2.0"
   },
   "eslintConfig": {
     "root": true,
