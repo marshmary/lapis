@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ref } from 'vue';
+import Cache from '@/helpers/cacheHandler';
 
 // Add a request interceptor
 axios.defaults.withCredentials = true;
@@ -22,17 +23,26 @@ export const useFetch = (url, options = {}) => {
 
     const fetch = async (localUrl = "") => {
         loading.value = true;
+
         try {
             let res = null;
-            if (localUrl === "") {
-                res = await axios(url, { ...options, data: options.body });
-            } else {
-                res = await axios(localUrl, { ...options, data: options.body });
-            }
-            response.value = res;
-            data.value = res.data;
 
-            options.onCompleted && options.onCompleted(res.data);
+            let cachedData = Cache.get((localUrl === "") ? url : localUrl);
+            if (cachedData) {
+                data.value = cachedData;
+            } else {
+                if (localUrl === "") {
+                    res = await axios(url, { ...options, data: options.body });
+                } else {
+                    res = await axios(localUrl, { ...options, data: options.body });
+                }
+
+                response.value = res;
+                data.value = res.data;
+                Cache.set((localUrl === "") ? url : localUrl, res.data);
+            }
+
+            options.onCompleted && options.onCompleted(data.value);
         } catch (error) {
             errors.value = error.response.data;
 
@@ -41,8 +51,6 @@ export const useFetch = (url, options = {}) => {
             loading.value = false;
         }
     }
-
-    fetch()
 
     return { response, data, loading, errors, fetch }
 }
