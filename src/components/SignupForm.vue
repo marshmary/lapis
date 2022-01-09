@@ -115,12 +115,12 @@
 </template>
 
 <script>
-// Validate libs
+// Libs
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, sameAs, helpers } from "@vuelidate/validators";
 
 // Composable
-import { useFetch } from "@/composable/useFetch";
+import { useFetch } from "@/helpers/useFetch";
 import TheModal from "@/components/TheModal.vue";
 
 export default {
@@ -176,6 +176,8 @@ export default {
           this.$refs.modal.showModal();
         },
       });
+
+      res.fetch();
 
       this.submit.data = res.data;
       this.submit.loading = res.loading;

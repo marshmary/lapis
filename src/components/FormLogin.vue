@@ -80,26 +80,31 @@ import { ref, computed, reactive, defineProps } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { useRouter } from "vue-router";
+import { useFetch } from "@vueuse/core";
 
 // Projs
-import { useFetch } from "@/composable/useFetch";
 import TheModal from "@/components/TheModal.vue";
 import { useUserStore } from "@/store/useUser";
+import { API } from "@/helpers/Constants";
 
-// Props for background image
+//#region Background images
+
 const props = defineProps({
   imageurl: String,
 });
 
 const image = `url(${props.imageurl})`;
 
+//#endregion
+
 // Refs
 const userStore = useUserStore(); // Store
 const router = useRouter(); // Router to redirect
 const modal = ref(undefined); // Modal to show error
-const loading = ref(false); // Loading value
+const loading = ref(false);
 
-// Vuelidate
+//#region Vuelidate
+
 const state = reactive({
   form: {
     email: "",
@@ -122,29 +127,33 @@ const rules = computed(() => ({
 
 const v$ = useVuelidate(rules, state);
 
+//#endregion
+
 // Submit form
 const onSubmit = async () => {
   loading.value = true;
 
-  useFetch(`${process.env.VUE_APP_BACKEND_API}/auth/login`, {
-    method: "post",
-    body: {
+  const { data, onFetchResponse, onFetchError } = useFetch(`${API}/auth/login`).post(
+    {
       email: state.form.email,
       password: state.form.password,
     },
-    onCompleted: (res) => {
-      loading.value = false;
-      userStore.login(res);
-      router.push("/");
-    },
-    onError: (errors) => {
-      loading.value = false;
-      // Show modal
-      state.modal.title = "Error";
-      state.modal.body = errors.message;
-      state.modal.isError = true;
-      modal.value.showModal();
-    },
+    "json"
+  );
+
+  onFetchResponse(() => {
+    loading.value = false;
+    userStore.login(JSON.parse(data.value));
+    router.push("/");
+  });
+
+  onFetchError(() => {
+    loading.value = false;
+    // Show modal
+    state.modal.title = "Error";
+    state.modal.body = JSON.parse(data.value).message;
+    state.modal.isError = true;
+    modal.value.showModal();
   });
 };
 </script>
