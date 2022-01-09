@@ -18,7 +18,7 @@ import { onMounted, ref, watch } from "vue";
 import ContentWrapper from "@/components/ContentWrapper.vue";
 import ImageList from "@/components/ImageList.vue";
 import SearchFilter from "@/components/SearchFilter.vue";
-import { useFetch } from "@/composable/useFetch";
+import { useFetch } from "@/helpers/useFetch";
 import { useSearchStore } from "@/store/useSearch";
 import { useHexColorConfig } from "@/helpers/useHexColorConfig";
 

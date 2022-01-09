@@ -4,7 +4,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, url } from "@vuelidate/validators";
 import TheModal from "@/components/TheModal.vue";
 import { useCheckFile } from "@/helpers/useCheckFile";
-import { useFetch } from "@/composable/useFetch";
+import { useFetch } from "@/helpers/useFetch";
 import { usePalette } from "@/helpers/usePalette";
 import { useHexColorConfig } from "@/helpers/useHexColorConfig";
 import { useRouter } from "vue-router";
@@ -221,9 +221,10 @@ const clearFormData = () => {
             class="border_dash border_app d-flex flex-column justify-content-center align-items-center text_upload"
           >
             <font-awesome-icon icon="arrow-circle-up" size="2x" />
-            <p class="pt-3 text-wrap text-center" style="width: 70%">
-              Drag and drop or click to upload file
-            </p>
+            <p
+              class="pt-3 text-wrap text-center"
+              style="width: 70%"
+            >Drag and drop or click to upload file</p>
           </div>
         </div>
         <!-- Hidden input -->
@@ -280,8 +281,7 @@ const clearFormData = () => {
               class="text_link"
               :href="state.form.credit.sourceUrl"
               target="_blank"
-              >Try access</a
-            >
+            >Try access</a>
             <!-- error message -->
             <div
               class="input-errors"
@@ -311,9 +311,7 @@ const clearFormData = () => {
               type="submit"
               class="btn btn-primary px-4 px-xl-5"
               :disabled="v$.form.$invalid || loading"
-            >
-              Create
-            </button>
+            >Create</button>
           </div>
         </form>
       </div>

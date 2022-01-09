@@ -14,3 +14,5 @@ export const TONES = {
     lightGray: "#E5E8EA",
     black: "#4D4C4C",
 }
+
+export const API = process.env.VUE_APP_BACKEND_API;

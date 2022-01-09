@@ -116,6 +116,8 @@ const logout = () => {
   userStore.logout();
   userStore.$reset();
 
+  window.scroll(0, 0);
+
   // Redirect to Home
   router.push("/");
 };

@@ -4,7 +4,7 @@
   </section>
 
   <section v-else-if="props.data.length">
-    <div v-masonry transition-duration="0.3s" class="pt-4" item-selector=".item">
+    <div v-masonry transition-duration="0.25s" class="pt-4" item-selector=".item">
       <div class="row mx-0 pt-4">
         <div
           v-masonry-tile
@@ -41,7 +41,7 @@ import NotFound from "@/components/NotFound.vue";
 const props = defineProps({
   data: Array,
   loading: Boolean,
-  errors: Object,
+  errors: String,
 });
 </script>
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ref } from 'vue';
+import { ref, unref, watch } from 'vue';
 import Cache from '@/helpers/cacheHandler';
 
 // Add a request interceptor
@@ -15,31 +15,25 @@ axios.interceptors.request.use(
     }
 );
 
-export const useFetch = (url, options = {}) => {
+export const useFetch = (url, options = { immediate: true, refresh: false }) => {
+    console.log("🚀 ~ file: useFetch.js ~ line 60 ~ useFetch ~ options", options)
     const data = ref(null);
-    const response = ref(null);
     const errors = ref(null);
     const loading = ref(false);
 
-    const fetch = async (localUrl = "") => {
+    const fetch = async () => {
         loading.value = true;
 
         try {
             let res = null;
 
-            let cachedData = Cache.get((localUrl === "") ? url : localUrl);
+            let cachedData = Cache.get(url);
             if (cachedData) {
                 data.value = cachedData;
             } else {
-                if (localUrl === "") {
-                    res = await axios(url, { ...options, data: options.body });
-                } else {
-                    res = await axios(localUrl, { ...options, data: options.body });
-                }
-
-                response.value = res;
+                res = await axios(unref(url), { ...options, data: options.body });
                 data.value = res.data;
-                Cache.set((localUrl === "") ? url : localUrl, res.data);
+                Cache.set(url, res.data);
             }
 
             options.onCompleted && options.onCompleted(data.value);
@@ -52,5 +46,15 @@ export const useFetch = (url, options = {}) => {
         }
     }
 
-    return { response, data, loading, errors, fetch }
+    if (options.immediate === true) {
+        fetch();
+    }
+
+    watch(() => [
+        unref(url),
+        unref(options.refresh)
+    ],
+        () => { fetch() }, { deep: true });
+
+    return { fetch, data, loading, errors }
 }
