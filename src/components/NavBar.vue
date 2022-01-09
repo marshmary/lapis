@@ -1,7 +1,7 @@
 <template>
   <nav
     v-if="isShow"
-    class="navbar navbar-expand-md fixed-top shadow_app"
+    class="navbar navbar-expand-md fixed-top border-bottom"
     aria-label="Fourth navbar example"
   >
     <div class="container-fluid my-0 px-0">
@@ -135,7 +135,7 @@ nav {
 }
 
 .fixed-top {
-  z-index: 10;
+  z-index: 12;
 }
 
 .bd-placeholder-img {
