@@ -25,3 +25,5 @@ pnpm-debug.log*
 # local https
 localhost.pem
 localhost-key.pem
+
+package-lock.json
