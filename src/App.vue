@@ -1,19 +1,15 @@
 <template>
   <div class="container-fluid px-0">
     <nav-bar />
-    <router-view />
+    <router-view :key="route.fullPath" />
   </div>
 </template>
 
-<script>
+<script setup>
 import NavBar from "@/components/NavBar.vue";
+import { useRoute } from "vue-router";
 
-export default {
-  name: "App",
-  components: {
-    NavBar,
-  },
-};
+const route = useRoute();
 </script>
 
 <style>
@@ -29,7 +25,7 @@ body {
 }
 
 .shadow_app {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.1);
 }
 
 .border_app {
@@ -87,6 +83,11 @@ body {
 
 .text_sub_content {
   color: var(--text-sub-content);
+}
+
+.bg-mint {
+  background-color: var(--color-mint) !important;
+  color: var(--bg) !important;
 }
 
 .btn,

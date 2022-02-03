@@ -1,46 +1,21 @@
 <template>
   <div class="card shadow_app border_app">
     <!-- Image -->
-    <img
-      @load="onImageLoad"
-      :src="image.medium"
-      class="card-img-top border_app"
-      alt="image"
-    />
+    <img :src="`${props.image.medium}?`" class="card-img-top border_app" alt="image" />
     <!-- Content -->
-    <div class="card-body border_app">
+    <div class="card-body border_app" @click.self="handleClickImage(image.id)">
       <!-- Credit -->
       <h5 class="card-title text-oposite">
         @
-        <a :href="image.credit.sourceUrl" target="_blank" class="credit">{{
-          image.credit.author
-        }}</a>
+        <a :href="image.credit.sourceUrl" target="_blank" class="credit">
+          {{ image.credit.author }}
+        </a>
       </h5>
-
-      <!-- Tag -->
-      <!-- <p class="card-text">
-        <span>
-          <font-awesome-icon icon="tags" />
-        </span>
-        <span class="tag ms-1" v-for="tag in image.tags" :key="tag">#{{ tag }} {{}}</span>
-      </p> -->
-
-      <!-- Size and Orientation -->
-      <!-- <p class="card-text">
-        <span v-if="image.orientation === 'Horizontal'">
-          <font-awesome-icon icon="image" />
-        </span>
-        <span v-else>
-          <font-awesome-icon icon="file-image" />
-        </span>
-
-        <span class="ms-1">{{ image.size.width }} x {{ image.size.height }}</span>
-      </p> -->
 
       <!-- Time -->
       <p class="card-text text-oposite">
         <font-awesome-icon icon="clock" />
-        <span class="ms-1">{{ this.moment(image.created).fromNow() }}</span>
+        <span class="ms-1">{{ moment(image.created).fromNow() }}</span>
       </p>
 
       <!-- Download button -->
@@ -51,42 +26,44 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import moment from "moment";
+import { defineProps } from "@vue/runtime-core";
+import { useRouter } from "vue-router";
 
-export default {
-  name: "ImageListItem",
-  props: {
-    image: {
-      id: String,
-      thumbnail: String,
-      medium: String,
-      hight: String,
-      tags: Array,
-      orientation: String,
-      size: Object,
-      credit: Object,
-      created: Date,
-    },
+const router = useRouter();
+
+const props = defineProps({
+  image: {
+    id: String,
+    thumbnail: String,
+    medium: String,
+    hight: String,
+    tags: Array,
+    orientation: String,
+    size: Object,
+    credit: Object,
+    created: Date,
   },
-  methods: {
-    download(url) {
-      fetch(url, { method: "GET" })
-        .then((response) => response.blob())
-        .then((blob) => {
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = blob.size;
-          document.body.appendChild(link); // to work on Firefox
-          link.click();
-          URL.revokeObjectURL(link.href);
-          link.remove();
-        });
-    },
-  },
-  beforeCreate() {
-    this.moment = moment;
-  },
+});
+
+const download = (url) => {
+  fetch(url, { method: "GET" })
+    .then((response) => response.blob())
+    .then((blob) => {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = blob.size;
+      document.body.appendChild(link); // to work on Firefox
+      link.click();
+      URL.revokeObjectURL(link.href);
+      link.remove();
+    });
+};
+
+const handleClickImage = (id) => {
+  window.scrollTo(0, 0);
+  router.push(`/image/${id}`);
 };
 </script>
 
@@ -98,10 +75,6 @@ export default {
 
 .text-oposite {
   color: #fff;
-}
-
-.tag {
-  color: var(--color-mint);
 }
 
 .card {
@@ -134,19 +107,16 @@ export default {
 
 .download_button {
   position: absolute;
+  z-index: 10;
   right: 1rem;
   bottom: 1rem;
 }
 
 .card-title {
   position: absolute;
+  z-index: 10;
   left: 1rem;
   bottom: 1rem;
-}
-
-.border_app_top {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
 }
 
 .btn-primary {
