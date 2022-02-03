@@ -1,5 +1,5 @@
 <template>
-  <content-wrapper>
+  <content-wrapper :margin-top="props.marginTop ? props.marginTop : '56px'">
     <image-list :data="images" :loading="isFetching" :errors="error"></image-list>
     <div
       style="height: 1px"
@@ -13,6 +13,7 @@
 // Libs
 import { onMounted, ref } from "vue";
 import { useFetch } from "@vueuse/core";
+import { defineProps } from "@vue/runtime-core";
 
 // Projs
 import ContentWrapper from "@/components/ContentWrapper.vue";
@@ -31,6 +32,10 @@ const apiUrl = ref(
 const changeAPIUrl = () => {
   apiUrl.value = `${API}/images?pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`;
 };
+
+const props = defineProps({
+  marginTop: String,
+});
 
 //#region Fetch data
 const { data, execute, isFetching, onFetchResponse, error } = useFetch(apiUrl, {
@@ -69,5 +74,3 @@ const handleScrolledToBottom = (isVisible) => {
 
 //#endregion
 </script>
-
-<style></style>
