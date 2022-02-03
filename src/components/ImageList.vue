@@ -1,9 +1,9 @@
 <template>
-  <section v-if="props.errors">
+  <section class="image_list" v-if="props.errors">
     <not-found />
   </section>
 
-  <section v-else-if="props.data.length">
+  <section class="image_list" v-else-if="props.data.length">
     <div v-masonry transition-duration="0.25s" class="pt-4" item-selector=".item">
       <div class="row mx-0 pt-4">
         <div
@@ -18,7 +18,10 @@
     </div>
   </section>
 
-  <section v-else-if="props.data.length === 0 && props.loading === false">
+  <section
+    class="image_list"
+    v-else-if="props.data.length === 0 && props.loading === false"
+  >
     <not-found />
   </section>
 
@@ -45,4 +48,8 @@ const props = defineProps({
 });
 </script>
 
-<style></style>
+<style>
+.image_list {
+  min-height: calc(100vh - 112px);
+}
+</style>

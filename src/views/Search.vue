@@ -1,7 +1,7 @@
 <template>
   <search-filter />
   <content-wrapper marginTop="112px">
-    <image-list :data="images" :loading="loading" :errors="errors" />
+    <image-list :data="images" :loading="isFetching" :errors="error" />
     <div
       style="height: 1px"
       v-if="images.length"
@@ -18,11 +18,15 @@ import { onMounted, ref, watch } from "vue";
 import ContentWrapper from "@/components/ContentWrapper.vue";
 import ImageList from "@/components/ImageList.vue";
 import SearchFilter from "@/components/SearchFilter.vue";
-import { useFetch } from "@/helpers/useFetch";
+import { useRouter, useRoute } from "vue-router";
+import { useFetch } from "@vueuse/core";
 import { useSearchStore } from "@/store/useSearch";
 import { useHexColorConfig } from "@/helpers/useHexColorConfig";
 
 const searchStore = useSearchStore();
+
+const router = useRouter();
+const route = useRoute();
 
 const apiUrl = ref(""); // url for fetching
 const pageNumber = ref(1);
@@ -30,6 +34,7 @@ const pageSize = ref(20);
 const pageNumberLimit = ref(2);
 const images = ref([]); //Image list
 const oldApiUrl = ref("");
+const isInit = ref(true);
 
 const generateAPIUrl = (
   tags = [],
@@ -65,47 +70,55 @@ const RemovePageNumberAndPageSizeFromUrl = (api) => {
   return api.replace(`pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`, "");
 };
 
-const { fetch, loading, errors } = useFetch(generateAPIUrl(searchStore.tags), {
-  onCompleted: (res) => {
-    if (oldApiUrl.value === RemovePageNumberAndPageSizeFromUrl(apiUrl.value)) {
-      images.value.push(...res.payload);
-    } else {
-      // If not replace with new data
-      images.value = res.payload;
+const { data, isFetching, error, onFetchResponse } = useFetch(apiUrl, {
+  refetch: true,
+  immediate: false,
+}).json();
 
-      // Save old url for compare
-      oldApiUrl.value = RemovePageNumberAndPageSizeFromUrl(apiUrl.value);
+onFetchResponse((res) => {
+  if (oldApiUrl.value === RemovePageNumberAndPageSizeFromUrl(apiUrl.value)) {
+    images.value.push(...data.value.payload);
+  } else {
+    // If not replace with new data
+    images.value = data.value.payload;
 
-      // Reset page Number
-      pageNumber.value = 1;
+    // Save old url for compare
+    oldApiUrl.value = RemovePageNumberAndPageSizeFromUrl(apiUrl.value);
 
-      // Set maxPageLimitF
-      pageNumberLimit.value =
-        res.totalRecord % pageSize.value === 0
-          ? Math.floor(res.totalRecord / pageSize.value)
-          : Math.floor(res.totalRecord / pageSize.value) + 1;
-    }
-  },
+    // Reset page Number
+    pageNumber.value = 1;
+
+    // Set maxPageLimitF
+    pageNumberLimit.value =
+      res.totalRecord % pageSize.value === 0
+        ? Math.floor(data.value.totalRecord / pageSize.value)
+        : Math.floor(data.value.totalRecord / pageSize.value) + 1;
+  }
 });
 
 onMounted(() => {
-  console.log("mounted");
-  fetch(generateAPIUrl(searchStore.tags, searchStore.orientation, searchStore.color));
+  generateAPIUrl(searchStore.tags, searchStore.orientation, searchStore.color);
+  isInit.value = false;
 });
 
 // Re-Fetch when ever user change search filter
 watch(searchStore, () => {
+  if (!isInit.value) {
+    router.replace(route.fullPath);
+  }
+
   pageNumber.value = 1;
-  console.log("watched");
-  fetch(generateAPIUrl(searchStore.tags, searchStore.orientation, searchStore.color));
+  generateAPIUrl(searchStore.tags, searchStore.orientation, searchStore.color);
 });
 
 const handleScrolledToBottom = (isVisible) => {
   if (!isVisible) return;
 
-  if (pageNumber.value < pageNumberLimit.value && loading.value === false) {
+  if (isInit.value) return;
+
+  if (pageNumber.value < pageNumberLimit.value && isFetching.value === false) {
     pageNumber.value++;
-    fetch(generateAPIUrl(searchStore.tags, searchStore.orientation, searchStore.color));
+    generateAPIUrl(searchStore.tags, searchStore.orientation, searchStore.color);
   }
 };
 </script>

@@ -9,15 +9,19 @@ import { defineProps } from "@vue/runtime-core";
 
 const props = defineProps({
   marginTop: String,
+  minHeight: String,
 });
 
 let wrapper_margin_top = !props.marginTop ? "56px" : props.marginTop;
+let min_height = !props.minHeight
+  ? `calc(100vh - ${wrapper_margin_top})`
+  : props.minHeight;
 </script>
 
 <style scoped>
 .wrapper {
   width: 100%;
-  min-height: calc(100vh - 56px);
+  min-height: v-bind(min_height);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   margin-top: v-bind(wrapper_margin_top);
