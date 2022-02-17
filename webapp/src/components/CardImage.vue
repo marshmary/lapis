@@ -52,7 +52,7 @@ const download = (url) => {
           class="col-12"
           :class="image.orientation !== 'Horizontal' ? 'col-md-7' : 'col-md-8'"
         >
-          <img :src="props.image.hight" class="img-fluid border_app_left" alt="image" />
+          <img :src="props.image.medium" class="img-fluid border_app_left" alt="image" />
         </div>
         <div
           class="col-12"
@@ -73,7 +73,7 @@ const download = (url) => {
               <!-- Download button group -->
               <div class="btn-group">
                 <button type="button" class="btn bg-mint" @click="download(image.hight)">
-                  Download it
+                  Download
                 </button>
                 <button
                   type="button"

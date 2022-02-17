@@ -7,9 +7,9 @@
       <!-- Credit -->
       <h5 class="card-title text-oposite">
         @
-        <a :href="image.credit.sourceUrl" target="_blank" class="credit">
-          {{ image.credit.author }}
-        </a>
+        <a :href="image.credit.sourceUrl" target="_blank" class="credit">{{
+          image.credit.author
+        }}</a>
       </h5>
 
       <!-- Time -->
