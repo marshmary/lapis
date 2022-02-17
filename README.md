@@ -1,24 +1,21 @@
 # lapis
 
-## Project setup
+## Description
+
+Anime wallpaper for desktop and mobile.
+
+## Install
+
+### Frontend
+
 ```
-npm install
+cd webapp
+npm i
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Backend
 
-### Compiles and minifies for production
 ```
-npm run build
+cd api
+dotnet restore
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
