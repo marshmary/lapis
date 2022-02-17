@@ -48,16 +48,10 @@ const download = (url) => {
       v-if="image"
     >
       <div class="row g-0">
-        <div
-          class="col-12"
-          :class="image.orientation !== 'Horizontal' ? 'col-md-7' : 'col-md-8'"
-        >
+        <div class="col-12" :class="image.orientation !== 'Horizontal' ? 'col-md-7' : 'col-md-8'">
           <img :src="props.image.medium" class="img-fluid border_app_left" alt="image" />
         </div>
-        <div
-          class="col-12"
-          :class="image.orientation !== 'Horizontal' ? 'col-md-5' : 'col-md-4'"
-        >
+        <div class="col-12" :class="image.orientation !== 'Horizontal' ? 'col-md-5' : 'col-md-4'">
           <div class="card-body ms-1">
             <!-- Author -->
             <div class="card-title text-oposite d-flex justify-content-between">
@@ -66,15 +60,12 @@ const download = (url) => {
                   :href="image.credit.sourceUrl"
                   target="_blank"
                   class="credit text_heading h5 fw-bold mb-0"
-                  >Author @{{ image.credit.author }}</a
-                >
+                >Author @{{ image.credit.author }}</a>
               </div>
 
               <!-- Download button group -->
               <div class="btn-group">
-                <button type="button" class="btn bg-mint" @click="download(image.hight)">
-                  Download
-                </button>
+                <button type="button" class="btn bg-mint" @click="download(image.hight)">Download</button>
                 <button
                   type="button"
                   class="btn bg-mint dropdown-toggle dropdown-toggle-split"
@@ -89,24 +80,13 @@ const download = (url) => {
                       class="dropdown-item"
                       href="#"
                       @click.prevent="download(image.thumbnail)"
-                      >Small</a
-                    >
+                    >Small</a>
                   </li>
                   <li>
-                    <a
-                      class="dropdown-item"
-                      href="#"
-                      @click.prevent="download(image.medium)"
-                      >Medium</a
-                    >
+                    <a class="dropdown-item" href="#" @click.prevent="download(image.medium)">Medium</a>
                   </li>
                   <li>
-                    <a
-                      class="dropdown-item"
-                      href="#"
-                      @click.prevent="download(image.hight)"
-                      >Large</a
-                    >
+                    <a class="dropdown-item" href="#" @click.prevent="download(image.hight)">Large</a>
                   </li>
                 </ul>
               </div>
@@ -126,9 +106,9 @@ const download = (url) => {
 
             <!-- Publish -->
             <p class="card-text">
-              <small class="text-muted"
-                >Published on {{ moment(image.created).format("MMMM DD, YYYY") }}</small
-              >
+              <small
+                class="text-muted"
+              >Published on {{ moment(image.created).format("MMMM DD, YYYY") }}</small>
             </p>
 
             <!-- Tag -->
@@ -140,9 +120,7 @@ const download = (url) => {
                 class="tag badge rounded-pill px-2 mx-1"
                 v-for="tag in image.tags"
                 :key="tag"
-              >
-                {{ tag }} {{}}
-              </span>
+              >{{ tag }} {{ }}</span>
             </p>
           </div>
         </div>
