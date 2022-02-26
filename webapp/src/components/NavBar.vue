@@ -1,9 +1,5 @@
 <template>
-  <nav
-    v-if="isShow"
-    class="navbar navbar-expand-md fixed-top border-bottom"
-    aria-label="Fourth navbar example"
-  >
+  <nav v-if="isShow" class="navbar navbar-expand-md fixed-top shadow_app">
     <div class="container-fluid my-0 px-0">
       <router-link class="navbar-brand ms-3 text_color" to="/">Lapis</router-link>
       <button
@@ -22,17 +18,15 @@
       <div class="collapse navbar-collapse" id="navbarshidden">
         <form class="search_form">
           <div class="input-group">
-            <span class="input-group-text px-3 border_app_left" id="basic-addon1">
-              <font-awesome-icon class="text_icon" icon="search" />
-            </span>
             <input
               type="search"
-              class="form-control border_app_right"
+              class="form-control"
               placeholder="Search images"
-              @focus="onFocus"
-              @blur="outFocus"
               @keydown.enter.prevent="onEnter"
             />
+            <span class="input-group-text search-button justify-content-center">
+              <font-awesome-icon class="text_icon text-white" icon="search" />
+            </span>
           </div>
         </form>
 
@@ -178,12 +172,24 @@ nav {
 
 .search_form {
   width: 35rem;
-  margin-left: 1rem;
+  margin-left: 20rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .search_form {
+    width: 28rem;
+    margin-left: 17rem;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .search_form {
     width: 20rem;
+    margin-left: 1rem;
   }
+}
+
+.search-button {
+  width: 3.5rem;
 }
 </style>

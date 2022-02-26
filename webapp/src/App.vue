@@ -2,11 +2,13 @@
   <div class="container-fluid px-0">
     <nav-bar />
     <router-view :key="route.fullPath" />
+    <scroll-to-top />
   </div>
 </template>
 
 <script setup>
 import NavBar from "@/components/NavBar.vue";
+import ScrollToTop from "@/components/ScrollToTop.vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();

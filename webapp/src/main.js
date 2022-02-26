@@ -11,7 +11,7 @@ import '@voerro/vue-tagsinput/dist/style.css'
 
 // fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret, faClock, faDownload, faTags, faImage, faFileImage, faExclamationCircle, faCheckCircle, faArrowCircleUp, faTrash, faBars, faSearch, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret, faClock, faDownload, faTags, faImage, faFileImage, faExclamationCircle, faCheckCircle, faArrowCircleUp, faTrash, faBars, faSearch, faTimes, faCheck, faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // bootstrap lib
@@ -25,7 +25,7 @@ import router from './router'
 import { createPinia } from 'pinia';
 
 // add fontawesome icon to use
-library.add(faUserSecret, faClock, faDownload, faTags, faImage, faFileImage, faExclamationCircle, faCheckCircle, faArrowCircleUp, faTrash, faBars, faSearch, faTimes, faCheck)
+library.add(faUserSecret, faClock, faDownload, faTags, faImage, faFileImage, faExclamationCircle, faCheckCircle, faArrowCircleUp, faTrash, faBars, faSearch, faTimes, faCheck, faArrowUp)
 
 import Cache from './helpers/cacheHandler';
 

@@ -50,6 +50,6 @@ const props = defineProps({
 
 <style>
 .image_list {
-  min-height: calc(100vh - 112px);
+  min-height: calc(100vh - 56px);
 }
 </style>

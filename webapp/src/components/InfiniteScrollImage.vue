@@ -1,18 +1,14 @@
 <template>
   <content-wrapper :margin-top="props.marginTop ? props.marginTop : '56px'">
-    <image-list :data="images" :loading="isFetching" :errors="error"></image-list>
-    <div
-      style="height: 1px"
-      v-if="images.length"
-      v-observe-visibility="handleScrolledToBottom"
-    ></div>
+    <image-list :data="images" :loading="isFetching" :errors="error" />
+    <div style="height: 3px" v-observe-visibility="handleScrolledToBottom"></div>
   </content-wrapper>
 </template>
 
 <script setup>
 // Libs
-import { onMounted, ref } from "vue";
-import { useFetch } from "@vueuse/core";
+import { ref, watch } from "vue";
+import { useFetch, useWindowScroll } from "@vueuse/core";
 import { defineProps } from "@vue/runtime-core";
 
 // Projs
@@ -28,19 +24,16 @@ const pageSize = ref(12);
 const apiUrl = ref(
   `${API}/images?pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`
 );
-
-const changeAPIUrl = () => {
-  apiUrl.value = `${API}/images?pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`;
-};
+const firstLoad = ref(false); // Control if the first load is done for scrolling
 
 const props = defineProps({
   marginTop: String,
 });
 
 //#region Fetch data
-const { data, execute, isFetching, onFetchResponse, error } = useFetch(apiUrl, {
+
+const { data, isFetching, onFetchResponse, error } = useFetch(apiUrl, {
   refetch: true,
-  immediate: false,
 });
 
 onFetchResponse(() => {
@@ -56,19 +49,33 @@ onFetchResponse(() => {
 
 //#endregion
 
-// When component mounted
-onMounted(() => {
-  execute();
+const changeAPIUrlToReFetch = () => {
+  if (pageNumber.value < pageNumberLimit.value && isFetching.value === false) {
+    pageNumber.value++;
+    apiUrl.value = `${API}/images?pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`;
+  }
+};
+
+//#region Fetch when scroll a little bit
+
+const { y } = useWindowScroll();
+
+watch(y, (newValue, oldValue) => {
+  if (newValue > oldValue + 40) {
+    changeAPIUrlToReFetch();
+    firstLoad.value = true;
+  }
 });
+
+//#endregion
 
 //#region Infinite scroll
 
 const handleScrolledToBottom = (isVisible) => {
   if (!isVisible) return;
 
-  if (pageNumber.value < pageNumberLimit.value && isFetching.value === false) {
-    pageNumber.value++;
-    changeAPIUrl();
+  if (firstLoad.value === true) {
+    changeAPIUrlToReFetch();
   }
 };
 
