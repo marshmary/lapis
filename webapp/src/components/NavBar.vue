@@ -25,7 +25,7 @@
               @keydown.enter.prevent="onEnter"
             />
             <span class="input-group-text search-button justify-content-center">
-              <font-awesome-icon class="text_icon text-white" icon="search" />
+              <font-awesome-icon class="text_icon" icon="search" />
             </span>
           </div>
         </form>
@@ -60,8 +60,7 @@
                     <router-link
                       class="dropdown-item text_color"
                       :to="`/user/${userStore.id}`"
-                      >Profile</router-link
-                    >
+                    >Profile</router-link>
                   </li>
                   <li>
                     <p class="dropdown-item my-0 text_color" @click="logout">Logout</p>
@@ -154,6 +153,10 @@ nav {
   width: 1.5rem;
 }
 
+.text_icon {
+  color: var(--color-mint-hight);
+}
+
 .text_color {
   color: var(--text-content) !important;
 }
@@ -172,19 +175,19 @@ nav {
 
 .search_form {
   width: 35rem;
-  margin-left: 20rem;
+  margin-left: calc(100% / 2 - 35rem / 2 - 60px);
 }
 
 @media screen and (max-width: 1200px) {
   .search_form {
     width: 28rem;
-    margin-left: 17rem;
+    margin-left: calc(100% / 2 - 28rem / 2 - 60px);
   }
 }
 
 @media screen and (max-width: 768px) {
   .search_form {
-    width: 20rem;
+    width: calc(100% - 2rem);
     margin-left: 1rem;
   }
 }
