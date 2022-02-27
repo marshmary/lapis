@@ -9,8 +9,8 @@
         <div
           v-masonry-tile
           class="item col-12 col-md-6 col-lg-4 col-xxl-3"
-          v-for="item in props.data"
-          :key="item.id"
+          v-for="(item, index) in props.data"
+          :key="index"
         >
           <image-list-item :image="item" class="mb-4" />
         </div>
@@ -18,10 +18,7 @@
     </div>
   </section>
 
-  <section
-    class="image_list"
-    v-else-if="props.data.length === 0 && props.loading === false"
-  >
+  <section class="image_list" v-else-if="props.data.length === 0 && props.loading === false">
     <not-found />
   </section>
 
@@ -50,6 +47,6 @@ const props = defineProps({
 
 <style>
 .image_list {
-  min-height: calc(100vh - 112px);
+  min-height: calc(100vh - 56px);
 }
 </style>

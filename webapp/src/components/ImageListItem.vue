@@ -1,15 +1,15 @@
 <template>
   <div class="card shadow_app border_app">
     <!-- Image -->
-    <img :src="`${props.image.medium}?`" class="card-img-top border_app" alt="image" />
+    <img :src="`${image.medium}?`" class="card-img-top border_app" alt="image" />
     <!-- Content -->
     <div class="card-body border_app" @click.self="handleClickImage(image.id)">
       <!-- Credit -->
       <h5 class="card-title text-oposite">
         @
-        <a :href="image.credit.sourceUrl" target="_blank" class="credit">{{
-          image.credit.author
-        }}</a>
+        <a :href="image.credit.sourceUrl" target="_blank" class="credit">
+          {{ image.credit.author }}
+        </a>
       </h5>
 
       <!-- Time -->
@@ -33,7 +33,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const props = defineProps({
+defineProps({
   image: {
     id: String,
     thumbnail: String,

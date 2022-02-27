@@ -6,7 +6,7 @@ const searchStore = useSearchStore();
 </script>
 
 <template>
-  <div class="search_filter p-3 d-flex shadow_app">
+  <div class="search_filter p-3 d-flex">
     <div class="me-auto">
       <span
         v-if="searchStore.tags.length > 0"
@@ -23,11 +23,7 @@ const searchStore = useSearchStore();
         class="badge rounded-pill bg-secondary me-2 p-2"
       >
         <span class="ms-2 me-1">#{{ tag }}</span>
-        <font-awesome-icon
-          class="text_icon"
-          icon="times"
-          @click="searchStore.removeTag(tag)"
-        />
+        <font-awesome-icon class="text_icon" icon="times" @click="searchStore.removeTag(tag)" />
       </span>
     </div>
 
@@ -37,8 +33,7 @@ const searchStore = useSearchStore();
       role="button"
       v-if="searchStore.orientation !== '' || !searchStore.isColorEmpty"
       @click="searchStore.clearOrientationAndColor"
-      >Clear</a
-    >
+    >Clear</a>
 
     <!-- Orientation -->
     <div class="dropdown mx-3">
@@ -49,10 +44,11 @@ const searchStore = useSearchStore();
         id="dropdownOrientation"
         data-bs-toggle="dropdown"
         aria-expanded="false"
-        >{{
-          searchStore.orientation === "" ? "Any orientation" : searchStore.orientation
-        }}</a
       >
+        {{
+          searchStore.orientation === "" ? "Any orientation" : searchStore.orientation
+        }}
+      </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownOrientation">
         <li @click="searchStore.setOrientation('')">
           <a class="dropdown-item">
@@ -125,8 +121,7 @@ const searchStore = useSearchStore();
         id="dropdownColors"
         data-bs-toggle="dropdown"
         aria-expanded="false"
-        >{{ searchStore.isColorEmpty ? "Any color" : "Selected color" }}</a
-      >
+      >{{ searchStore.isColorEmpty ? "Any color" : "Selected color" }}</a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownColors">
         <li>
           <a class="dropdown-item" @click="searchStore.removeColors">
@@ -158,56 +153,6 @@ const searchStore = useSearchStore();
             </div>
           </div>
         </li>
-        <!-- Secondary color -->
-        <li>
-          <div class="color_list">
-            <div class="ms-2">Secondary tones</div>
-            <div class="d-flex flex-wrap mt-2 ms-1">
-              <!-- Color list from Constants -->
-              <div
-                v-for="tone in TONES"
-                :key="tone"
-                class="color_items m-1 d-flex align-items-center justify-content-center"
-                :class="searchStore.color.secondary === tone ? 'selected' : ''"
-                :style="{ backgroundColor: tone }"
-                @click="searchStore.setSecondaryColor(tone)"
-              >
-                <!-- Check icon on selected color - Change color to white when background is black -->
-                <font-awesome-icon
-                  v-if="searchStore.color.secondary === tone"
-                  icon="check"
-                  style="font-size: 0.5rem"
-                  :style="tone === '#4D4C4C' ? { color: '#fff' } : ''"
-                />
-              </div>
-            </div>
-          </div>
-        </li>
-        <!-- Tertiary color -->
-        <li>
-          <div class="color_list">
-            <div class="ms-2">Tertiary tones</div>
-            <div class="d-flex flex-wrap mt-2 ms-1">
-              <!-- Color list from Constants -->
-              <div
-                v-for="tone in TONES"
-                :key="tone"
-                class="color_items m-1 d-flex align-items-center justify-content-center"
-                :class="searchStore.color.tertiary === tone ? 'selected' : ''"
-                :style="{ backgroundColor: tone }"
-                @click="searchStore.setTertiaryColor(tone)"
-              >
-                <!-- Check icon on selected color - Change color to white when background is black -->
-                <font-awesome-icon
-                  v-if="searchStore.color.tertiary === tone"
-                  icon="check"
-                  style="font-size: 0.5rem"
-                  :style="tone === '#4D4C4C' ? { color: '#fff' } : ''"
-                />
-              </div>
-            </div>
-          </div>
-        </li>
       </ul>
     </div>
   </div>
@@ -215,10 +160,10 @@ const searchStore = useSearchStore();
 
 <style lang="scss" scoped>
 .search_filter {
-  width: 100vw;
+  width: 94vw;
   max-height: 56px;
   position: fixed;
-  left: 0;
+  left: 3vw;
   top: 56px;
   z-index: 10;
   background-color: var(--bg);
