@@ -149,6 +149,7 @@ const download = (url) => {
 
 .card-body {
   height: 100%;
+  background-color: var(--card-bg);
 }
 
 .credit {

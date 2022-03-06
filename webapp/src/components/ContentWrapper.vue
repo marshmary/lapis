@@ -25,6 +25,7 @@ let min_height = !props.minHeight
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   margin-top: v-bind(wrapper_margin_top);
+  background-color: var(--bg);
 }
 
 @media only screen and (min-width: 768px) {

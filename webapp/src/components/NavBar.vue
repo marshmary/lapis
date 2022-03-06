@@ -127,6 +127,24 @@ const onEnter = (e) => {
 nav {
   max-height: 56px;
   background-color: var(--bg);
+  border-bottom: 1px solid var(--divider);
+}
+
+.form-control {
+  background-color: var(--search-box-bg);
+  border-color: var(--divider);
+}
+
+.form-control:focus {
+  background-color: var(--search-box-bg);
+  border-color: var(--color-mint-hight);
+  color: var(--text-content);
+}
+
+.input-group-text {
+  background-color: var(--search-box-icon);
+  border-color: var(--divider);
+  color: var(--text-content);
 }
 
 .fixed-top {

@@ -21,10 +21,14 @@ const { data, isFetching, error } = useFetch(`${API}/images/${route.params.id}`)
 
     <card-image :image="data" v-else />
 
-    <h4 class="ps-2 mt-5" v-if="!isFetching">Related images</h4>
+    <h4 class="ps-2 mt-5 relate-heading" v-if="!isFetching">Related images</h4>
   </content-wrapper>
 
   <infinite-scroll-image marginTop="0px" />
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.relate-heading {
+  color: var(--text-heading);
+}
+</style>

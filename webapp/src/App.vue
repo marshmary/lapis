@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid px-0">
+  <div :class="`${darkMode.isDarkMode ? 'dark' : ''} container-fluid px-0`">
     <nav-bar />
     <router-view :key="route.fullPath" />
     <scroll-to-top />
@@ -10,8 +10,10 @@
 import NavBar from "@/components/NavBar.vue";
 import ScrollToTop from "@/components/ScrollToTop.vue";
 import { useRoute } from "vue-router";
+import { useDarkMode } from "@/store/useDarkMode";
 
 const route = useRoute();
+const darkMode = useDarkMode();
 </script>
 
 <style>
@@ -65,6 +67,12 @@ body {
   --color-lightgray: #eeeeef;
 
   --bg: #fefeff;
+  --card-bg: rgb(51, 51, 51);
+
+  --divider: #3c3c3c;
+
+  --search-box-bg: hsl(0, 0%, 7%);
+  --search-box-icon: hsla(0, 0%, 100%, 0.08);
 
   --text-heading: #000;
   --text-content: #030303;
@@ -72,6 +80,34 @@ body {
 
   --text-heading-opp: #fff;
   --text-content-opp: #fff;
+  --text-sub-content-opp: #9d9c9d;
+}
+
+.dark {
+  --color-grapefruit: #eb5562;
+  --color-bittersweet: #fb6c50;
+  --color-sunflower: #f5b945;
+  --color-grass: #89c152;
+  --color-mint: #47cead;
+  --color-mint-hight: #34ba9a;
+  --color-aqua: #3badd8;
+  --color-lavender: #ad93ea;
+  --color-lightgray: #eeeeef;
+
+  --bg: #212121;
+  --card-bg: rgb(51, 51, 51);
+
+  --divider: #3c3c3c;
+
+  --search-box-bg: hsl(0, 0%, 7%);
+  --search-box-icon: hsla(0, 0%, 100%, 0.08);
+
+  --text-heading: #fff;
+  --text-content: #fff;
+  --text-sub-content: #9d9c9d;
+
+  --text-heading-opp: #000;
+  --text-content-opp: #030303;
   --text-sub-content-opp: #9d9c9d;
 }
 
@@ -114,5 +150,9 @@ body {
 /* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
   background: #62656e;
+}
+
+.container-fluid {
+  background-color: var(--bg);
 }
 </style>
