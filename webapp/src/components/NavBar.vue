@@ -33,20 +33,20 @@
         <ul class="navbar-nav mb-2 mb-md-0 ms-auto">
           <!-- Login & Logout buttn -->
           <template v-if="userStore.isEmpty">
-            <li class="nav-item mx-3">
+            <li class="nav-item mx-2">
               <router-link class="nav-link text_color" to="/login">Login</router-link>
             </li>
-            <li class="nav-item mx-3">
+            <li class="nav-item mx-2">
               <router-link class="nav-link text_color" to="/signup">Sign up</router-link>
             </li>
           </template>
 
           <!-- Profile -->
           <template v-else>
-            <li class="nav-item mx-3">
+            <li class="nav-item mx-2">
               <router-link class="nav-link text_color" to="/upload">Upload</router-link>
             </li>
-            <li class="nav-item mx-3">
+            <li class="nav-item mx-2">
               <div class="btn-group">
                 <a
                   class="nav-link dropdown-toggle text_color"
@@ -69,6 +69,10 @@
               </div>
             </li>
           </template>
+
+          <li class="nav-item ms-2 me-3 d-flex align-items-center">
+            <change-mode-button />
+          </li>
         </ul>
       </div>
     </div>
@@ -84,6 +88,8 @@ import { useSearchStore } from "@/store/useSearch";
 
 // Router
 import { useRouter } from "vue-router";
+
+import ChangeModeButton from "@/components/ChangeModeButton.vue";
 
 // Declare router & store
 const userStore = useUserStore();
@@ -127,6 +133,24 @@ const onEnter = (e) => {
 nav {
   max-height: 56px;
   background-color: var(--bg);
+  border-bottom: 1px solid var(--nav-divider);
+}
+
+.form-control {
+  background-color: var(--search-box-bg);
+  border-color: var(--divider);
+}
+
+.form-control:focus {
+  background-color: var(--search-box-bg);
+  border-color: var(--color-mint-hight);
+  color: var(--text-content);
+}
+
+.input-group-text {
+  background-color: var(--search-box-icon);
+  border-color: var(--divider);
+  color: var(--text-content);
 }
 
 .fixed-top {
@@ -194,5 +218,17 @@ nav {
 
 .search-button {
   width: 3.5rem;
+}
+
+.dropdown-menu {
+  background-color: var(--card-bg);
+}
+
+.dropdown-item:hover {
+  background-color: var(--color-mint-hight);
+}
+
+.dropdown-menu > li > a {
+  color: var(--text-content);
 }
 </style>

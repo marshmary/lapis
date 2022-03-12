@@ -240,11 +240,11 @@ const clearFormData = () => {
       <div class="col-12 col-md-6 d-flex justify-content-center align-items-center px-5">
         <form class="row g-2" @submit.prevent="onSubmit">
           <div class="col-12">
-            <h4>Details</h4>
+            <h4 class="text_heading">Details</h4>
           </div>
           <!-- Author -->
           <div class="col-12">
-            <label for="inputCredit" class="form-label">Author</label>
+            <label for="inputCredit" class="form-label text_content">Author</label>
             <input
               type="text"
               class="form-control"
@@ -264,7 +264,7 @@ const clearFormData = () => {
 
           <!-- Direct link -->
           <div class="col-12">
-            <label for="inputSource" class="form-label">Source url</label>
+            <label for="inputSource" class="form-label text_content">Source url</label>
             <input
               type="text"
               class="form-control"
@@ -294,7 +294,7 @@ const clearFormData = () => {
 
           <!-- Tag -->
           <div class="col-12">
-            <label for="inputEmai" class="form-label">Tags</label>
+            <label for="inputEmai" class="form-label text_content">Tags</label>
             <tags-input
               element-id="imagetags"
               :add-tags-on-comma="true"
@@ -326,11 +326,15 @@ const clearFormData = () => {
   min-height: calc(100vh - 56px);
 }
 
+.form_box {
+  background-color: var(--card-bg);
+}
+
 // Image upload
 .drag_box {
   height: 85%;
   width: 80%;
-  background-color: var(--color-lightgray);
+  background-color: var(--upload-zone-bg);
   position: relative;
 }
 
@@ -338,6 +342,11 @@ const clearFormData = () => {
   height: 93%;
   width: 88%;
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%2300000038' stroke-width='4' stroke-dasharray='6%2c 9' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+}
+
+.form-control {
+  background-color: var(--search-box-bg);
+  border-color: var(--divider);
 }
 
 .upload_image {
