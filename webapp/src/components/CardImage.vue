@@ -38,7 +38,7 @@ const download = (url) => {
 </script>
 
 <template>
-  <div class="d-flex justify-content-center align-items-center">
+  <div class="d-flex justify-content-center align-items-center pt-4">
     <div
       class="card shadow_app border_app my-4"
       :style="{
@@ -47,12 +47,15 @@ const download = (url) => {
       }"
       v-if="image"
     >
-      <div class="row g-0">
-        <div class="col-12" :class="image.orientation !== 'Horizontal' ? 'col-md-7' : 'col-md-8'">
+      <div class="row g-0 card_bg border_app">
+        <div
+          class="col-12"
+          :class="`${image.orientation !== 'Horizontal' ? 'col-md-7' : 'col-md-8'}`"
+        >
           <img :src="props.image.medium" class="img-fluid border_app_left" alt="image" />
         </div>
         <div class="col-12" :class="image.orientation !== 'Horizontal' ? 'col-md-5' : 'col-md-4'">
-          <div class="card-body ms-1">
+          <div class="card-body border_app_right ms-1">
             <!-- Author -->
             <div class="card-title text-oposite d-flex justify-content-between">
               <div class="d-flex align-items-center">
@@ -93,7 +96,7 @@ const download = (url) => {
             </div>
 
             <!-- Size and Orientation -->
-            <p class="card-text">
+            <p class="card-text text_sub_content">
               <span v-if="image.orientation === 'Horizontal'">
                 <font-awesome-icon icon="image" />
               </span>
@@ -114,7 +117,7 @@ const download = (url) => {
             <!-- Tag -->
             <p class="card-text">
               <span>
-                <font-awesome-icon icon="tags" />
+                <font-awesome-icon icon="tags" class="text_content" />
               </span>
               <span
                 class="tag badge rounded-pill px-2 mx-1"
@@ -132,11 +135,11 @@ const download = (url) => {
 <style scoped>
 .card {
   border: none;
+  min-width: 60rem;
 }
 
 .img-fluid {
-  min-height: 50vh;
-  min-width: 30vw;
+  width: 100%;
 }
 
 .bg-mint:hover {
@@ -166,5 +169,17 @@ const download = (url) => {
 
 .tag {
   background-color: var(--color-mint-hight);
+}
+
+.dropdown-menu {
+  background-color: var(--bg);
+}
+
+.dropdown-item:hover {
+  background-color: var(--color-mint-hight);
+}
+
+.dropdown-menu > li > a {
+  color: var(--text-content);
 }
 </style>

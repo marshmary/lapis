@@ -14,6 +14,10 @@ import { useDarkMode } from "@/store/useDarkMode";
 
 const route = useRoute();
 const darkMode = useDarkMode();
+
+const localDarkMode = localStorage.getItem("isDarkMode");
+darkMode.setDarkMode(localDarkMode ? localDarkMode : false);
+
 </script>
 
 <style>
@@ -53,6 +57,8 @@ body {
 
 .tags-input-wrapper-default {
   padding: 0.5rem 0.75rem !important;
+  background-color: var(--search-box-bg) !important;
+  border-color: var(--divider) !important;
 }
 
 :root {
@@ -67,12 +73,15 @@ body {
   --color-lightgray: #eeeeef;
 
   --bg: #fefeff;
-  --card-bg: rgb(51, 51, 51);
+  --card-bg: #fefeff;
 
-  --divider: #3c3c3c;
+  --nav-divider: #ffffff;
+  --divider: #ced4da;
 
-  --search-box-bg: hsl(0, 0%, 7%);
-  --search-box-icon: hsla(0, 0%, 100%, 0.08);
+  --search-box-bg: #fefeff;
+  --search-box-icon: #e9ecef;
+
+  --upload-zone-bg: #eeeeef;
 
   --text-heading: #000;
   --text-content: #030303;
@@ -97,14 +106,17 @@ body {
   --bg: #212121;
   --card-bg: rgb(51, 51, 51);
 
+  --nav-divider: #3c3c3c;
   --divider: #3c3c3c;
 
   --search-box-bg: hsl(0, 0%, 7%);
   --search-box-icon: hsla(0, 0%, 100%, 0.08);
 
+  --upload-zone-bg: hsla(0, 0%, 100%, 0.15);
+
   --text-heading: #fff;
   --text-content: #fff;
-  --text-sub-content: #9d9c9d;
+  --text-sub-content: #aaa;
 
   --text-heading-opp: #000;
   --text-content-opp: #030303;
@@ -121,6 +133,14 @@ body {
 
 .text_sub_content {
   color: var(--text-sub-content);
+}
+
+.bg {
+  background-color: var(--bg);
+}
+
+.card_bg {
+  background-color: var(--card-bg);
 }
 
 .bg-mint {

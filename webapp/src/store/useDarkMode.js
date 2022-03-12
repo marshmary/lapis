@@ -1,19 +1,17 @@
 import { defineStore } from "pinia";
 
 export const useDarkMode = defineStore("darkMode", {
-    state: () => {
-        return {
-            default: false,
-        };
-    },
+    state: () => ({
+        darkMode: false,
+    }),
     getters: {
         isDarkMode: (state) => {
-            const localDarkMode = localStorage.getItem("isDarkMode");
-            return localDarkMode ? localDarkMode : state.default;
+            return state.darkMode;
         },
     },
     actions: {
-        setDarkMode: (value) => {
+        setDarkMode(value) {
+            this.darkMode = value;
             localStorage.setItem("isDarkMode", value);
         },
     },
