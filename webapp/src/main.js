@@ -29,6 +29,7 @@ import {
     faArrowUp,
     faSun,
     faMoon,
+    faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -60,7 +61,8 @@ library.add(
     faCheck,
     faArrowUp,
     faSun,
-    faMoon
+    faMoon,
+    faExternalLinkAlt
 );
 
 import Cache from "./helpers/cacheHandler";
