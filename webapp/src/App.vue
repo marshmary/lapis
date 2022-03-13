@@ -21,6 +21,7 @@ darkMode.setDarkMode(localDarkMode ? localDarkMode : false);
 </script>
 
 <style>
+/* default config */
 body {
   margin: 0;
   padding: 0;
@@ -32,9 +33,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* shadow */
+
 .shadow_app {
   box-shadow: 0 1px 20px rgba(0, 0, 0, 0.1);
 }
+
+/* border */
 
 .border_app {
   border-radius: 8px !important;
@@ -55,11 +60,7 @@ body {
   border-bottom-left-radius: 8px !important;
 }
 
-.tags-input-wrapper-default {
-  padding: 0.5rem 0.75rem !important;
-  background-color: var(--search-box-bg) !important;
-  border-color: var(--divider) !important;
-}
+/* Color for white mode & dark mode */
 
 :root {
   --color-grapefruit: #eb5562;
@@ -123,6 +124,8 @@ body {
   --text-sub-content-opp: #9d9c9d;
 }
 
+/* text styling */
+
 .text_heading {
   color: var(--text-heading);
 }
@@ -134,6 +137,8 @@ body {
 .text_sub_content {
   color: var(--text-sub-content);
 }
+
+/* background styling */
 
 .bg {
   background-color: var(--bg);
@@ -147,6 +152,17 @@ body {
   background-color: var(--color-mint) !important;
   color: var(--bg) !important;
 }
+
+/* restyling tags input */
+
+.tags-input-wrapper-default {
+  padding: 0.5rem 0.75rem !important;
+  background-color: var(--search-box-bg) !important;
+  border-color: var(--divider) !important;
+  color: var(--text-sub-content) !important;
+}
+
+/* remove focus border of bootstrap */
 
 .btn,
 .btn:focus,
@@ -163,6 +179,8 @@ body {
   box-shadow: none !important;
 }
 
+/* remove vertical scrollbar */
+
 ::-webkit-scrollbar {
   width: 0; /* Remove scrollbar space */
   background: transparent; /* Optional: just make scrollbar invisible */
@@ -171,6 +189,8 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #62656e;
 }
+
+/* background color  */
 
 .container-fluid {
   background-color: var(--bg);

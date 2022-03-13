@@ -79,9 +79,6 @@ createApp(App)
         unmounted: ObserveVisibility.unbind,
     })
     .use(VueMasonryPlugin)
-    .component(
-        "font-awesome-icon",
-        <FontAwesomeIcon fixed-width></FontAwesomeIcon>
-    )
+    .component("font-awesome-icon", FontAwesomeIcon)
     .component("tags-input", VoerroTagsInput)
     .mount("#app");

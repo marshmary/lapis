@@ -13,6 +13,6 @@ export const TONES = {
     white: "#FEFFFE",
     lightGray: "#E5E8EA",
     black: "#4D4C4C",
-}
+};
 
-export const API = process.env.VUE_APP_BACKEND_API;
+export const API = `${import.meta.env.VITE_BACKEND_API}/api`;

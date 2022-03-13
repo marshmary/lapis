@@ -2,11 +2,7 @@
   <search-filter />
   <content-wrapper marginTop="112px">
     <image-list :data="images" :loading="isFetching" :errors="error" />
-    <div
-      style="height: 1px"
-      v-if="images.length"
-      v-observe-visibility="handleScrolledToBottom"
-    ></div>
+    <div style="height: 1px" v-if="images.length" v-observe-visibility="handleScrolledToBottom"></div>
   </content-wrapper>
 </template>
 
@@ -22,6 +18,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useFetch } from "@vueuse/core";
 import { useSearchStore } from "@/store/useSearch";
 import { useHexColorConfig } from "@/helpers/useHexColorConfig";
+import { API } from "@/helpers/Constants";
 
 const searchStore = useSearchStore();
 
@@ -41,7 +38,7 @@ const generateAPIUrl = (
   orientation = "",
   color = { primary: "", secondary: "", tertiary: "" }
 ) => {
-  let localApiUrl = `${process.env.VUE_APP_BACKEND_API}/images?pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`;
+  let localApiUrl = `${API}/images?pageNumber=${pageNumber.value}&pageSize=${pageSize.value}`;
 
   if (tags.length > 0) {
     for (const key in tags) {

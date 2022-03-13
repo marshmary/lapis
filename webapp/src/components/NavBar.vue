@@ -178,7 +178,7 @@ nav {
 }
 
 .text_icon {
-  color: var(--color-mint-hight);
+  color: var(--text-content);
 }
 
 .text_color {
