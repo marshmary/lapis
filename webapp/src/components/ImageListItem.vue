@@ -7,9 +7,7 @@
       <!-- Credit -->
       <h5 class="card-title text-oposite">
         @
-        <a :href="image.credit.sourceUrl" target="_blank" class="credit">
-          {{ image.credit.author }}
-        </a>
+        <a :href="image.credit.sourceUrl" target="_blank" class="credit">{{ image.credit.author }}</a>
       </h5>
 
       <!-- Time -->
@@ -17,6 +15,11 @@
         <font-awesome-icon icon="clock" />
         <span class="ms-1">{{ moment(image.created).fromNow() }}</span>
       </p>
+
+      <!-- Open in new tab button -->
+      <a class="btn btn-primary open_button" target="_blank" :href="`${baseUrl}/image/${image.id}`">
+        <font-awesome-icon icon="external-link-alt" />
+      </a>
 
       <!-- Download button -->
       <a class="btn btn-primary download_button" @click.prevent="download(image.hight)">
@@ -61,6 +64,8 @@ const download = (url) => {
     });
 };
 
+const baseUrl = window.location.origin;
+
 const handleClickImage = (id) => {
   window.scrollTo(0, 0);
   router.push(`/image/${id}`);
@@ -103,6 +108,13 @@ const handleClickImage = (id) => {
 
 .card:hover .card-body {
   opacity: 1;
+}
+
+.open_button {
+  position: absolute;
+  z-index: 10;
+  right: 1rem;
+  top: 1rem;
 }
 
 .download_button {

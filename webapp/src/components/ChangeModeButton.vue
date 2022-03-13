@@ -13,8 +13,8 @@ const handleChangeToggle = () => {
         <label class="toggle">
             <input type="checkbox" :checked="darkMode.isDarkMode" @change="handleChangeToggle" />
             <span class="toggler round d-flex justify-content-between align-items-center">
-                <font-awesome-icon icon="sun" size="sm" style="margin-left: 2px;" />
-                <font-awesome-icon icon="moon" size="sm" style="margin-right: 2px; color: white;" />
+                <font-awesome-icon icon="moon" size="sm" style="margin-left: 3px; color: white;" />
+                <font-awesome-icon icon="sun" size="sm" style="margin-right: 3px; color: white;" />
             </span>
         </label>
     </div>

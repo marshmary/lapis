@@ -10,7 +10,7 @@ const handleScrollTop = () => {
     class="scroll-top shadow_app d-flex justify-content-center align-items-center"
     @click="handleScrollTop"
   >
-    <font-awesome-icon size="lg" icon="arrow-up" style="color: white" />
+    <font-awesome-icon icon="arrow-up" style="color: white" />
   </div>
 </template>
 
@@ -20,10 +20,10 @@ const handleScrollTop = () => {
   background-color: var(--color-mint-hight);
   opacity: 0.8;
   border-radius: 50%;
-  bottom: 1.5rem;
+  bottom: 1rem;
   right: 1rem;
-  height: 3rem;
-  width: 3rem;
+  height: 2.5rem;
+  width: 2.5rem;
   z-index: 10;
   cursor: pointer;
 }

@@ -18,6 +18,9 @@ const image = `url(${props.imageurl})`;
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/form.scss";
+@import "@/scss/_mixins.scss";
+
 .wrapper {
   @include wrapper-height();
   height: 100vh;

@@ -199,13 +199,13 @@ const clearFormData = () => {
       <!-- Image upload -->
       <div class="col-6 d-flex justify-content-center align-items-center">
         <!-- Submitted image -->
-        <div v-if="uploadImage" class="drag_box">
+        <div v-if="uploadImage" class="drag_box border_app">
           <img :src="uploadImage" class="upload_image border_app" />
           <div
             class="remove_button d-flex justify-content-center align-items-center"
             @click="handleRemoveUploadImage"
           >
-            <font-awesome-icon icon="trash" size="2x" />
+            <font-awesome-icon icon="trash" style="color: var(--text-content)" size="2x" />
           </div>
         </div>
         <!-- Upload box -->
@@ -218,7 +218,7 @@ const clearFormData = () => {
           @click="handleClickUpload"
         >
           <div
-            class="border_dash border_app d-flex flex-column justify-content-center align-items-center text_upload"
+            class="border_dash border_app d-flex flex-column justify-content-center align-items-center text_sub_content"
           >
             <font-awesome-icon icon="arrow-circle-up" size="2x" />
             <p
@@ -302,7 +302,7 @@ const clearFormData = () => {
               @tag-removed="onTagRemoved"
             ></tags-input>
             <!-- Small info -->
-            <p class="text_subcontent">Enter a comma after each tag</p>
+            <p class="text_sub_content">Enter a comma after each tag</p>
           </div>
 
           <!-- Submit -->
@@ -330,23 +330,24 @@ const clearFormData = () => {
   background-color: var(--card-bg);
 }
 
+.form-control {
+  background-color: var(--search-box-bg);
+  border-color: var(--divider);
+  color: var(--text-content);
+}
+
 // Image upload
 .drag_box {
   height: 85%;
   width: 80%;
-  background-color: var(--upload-zone-bg);
   position: relative;
+  background-color: var(--upload-zone-bg);
 }
 
 .border_dash {
   height: 93%;
   width: 88%;
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%2300000038' stroke-width='4' stroke-dasharray='6%2c 9' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
-}
-
-.form-control {
-  background-color: var(--search-box-bg);
-  border-color: var(--divider);
 }
 
 .upload_image {
@@ -365,14 +366,5 @@ const clearFormData = () => {
   z-index: 2;
   top: 46%;
   left: 46%;
-}
-
-.text_upload {
-  color: var(--text-sub-content);
-}
-
-.text_subcontent {
-  color: var(--text-sub-content);
-  font-size: smaller;
 }
 </style>

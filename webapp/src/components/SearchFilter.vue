@@ -6,7 +6,7 @@ const searchStore = useSearchStore();
 </script>
 
 <template>
-  <div class="search_filter p-3 d-flex">
+  <div class="search_filter py-3 px-5 d-flex bg">
     <div class="me-auto">
       <span
         v-if="searchStore.tags.length > 0"
@@ -160,10 +160,10 @@ const searchStore = useSearchStore();
 
 <style lang="scss" scoped>
 .search_filter {
-  width: 94vw;
+  width: 100vw;
   max-height: 56px;
   position: fixed;
-  left: 3vw;
+  // left: 3vw;
   top: 56px;
   z-index: 10;
   background-color: var(--bg);

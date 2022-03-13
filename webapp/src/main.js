@@ -29,6 +29,7 @@ import {
     faArrowUp,
     faSun,
     faMoon,
+    faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -60,7 +61,8 @@ library.add(
     faCheck,
     faArrowUp,
     faSun,
-    faMoon
+    faMoon,
+    faExternalLinkAlt
 );
 
 import Cache from "./helpers/cacheHandler";
@@ -79,9 +81,6 @@ createApp(App)
         unmounted: ObserveVisibility.unbind,
     })
     .use(VueMasonryPlugin)
-    .component(
-        "font-awesome-icon",
-        <FontAwesomeIcon fixed-width></FontAwesomeIcon>
-    )
+    .component("font-awesome-icon", FontAwesomeIcon)
     .component("tags-input", VoerroTagsInput)
     .mount("#app");
