@@ -8,6 +8,7 @@ import { useFetch } from "@/helpers/useFetch";
 import { usePalette } from "@/helpers/usePalette";
 import { useHexColorConfig } from "@/helpers/useHexColorConfig";
 import { useRouter } from "vue-router";
+import { API } from "@/helpers/Constants";
 
 const modal = ref(undefined); // Modal to show error
 const loading = ref(false); // Loading value
@@ -160,7 +161,7 @@ const onSubmit = async () => {
     }
   }
 
-  useFetch(`${process.env.VUE_APP_BACKEND_API}/images`, {
+  useFetch(`${API}/images`, {
     method: "post",
     body: formData,
     onCompleted: (res) => {
