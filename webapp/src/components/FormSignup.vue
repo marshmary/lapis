@@ -20,11 +20,7 @@
             v-model="v$.form.fullname.$model"
           />
           <!-- error message -->
-          <div
-            class="input-errors"
-            v-for="(error, index) of v$.form.fullname.$errors"
-            :key="index"
-          >
+          <div class="input-errors" v-for="(error, index) of v$.form.fullname.$errors" :key="index">
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
@@ -40,11 +36,7 @@
             v-model="v$.form.email.$model"
           />
           <!-- error message -->
-          <div
-            class="input-errors"
-            v-for="(error, index) of v$.form.email.$errors"
-            :key="index"
-          >
+          <div class="input-errors" v-for="(error, index) of v$.form.email.$errors" :key="index">
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
@@ -60,11 +52,7 @@
             v-model="v$.form.password.$model"
           />
           <!-- error message -->
-          <div
-            class="input-errors"
-            v-for="(error, index) of v$.form.password.$errors"
-            :key="index"
-          >
+          <div class="input-errors" v-for="(error, index) of v$.form.password.$errors" :key="index">
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
@@ -95,9 +83,7 @@
             type="submit"
             class="btn btn-primary px-4 px-xl-5"
             :disabled="v$.form.$invalid || submit.loading"
-          >
-            Sign up
-          </button>
+          >Sign up</button>
           <div>
             <p class="ms-3 my-0">
               or
@@ -118,6 +104,7 @@
 // Libs
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, sameAs, helpers } from "@vuelidate/validators";
+import { API } from "@/helpers/Constants";
 
 // Composable
 import { useFetch } from "@/helpers/useFetch";
@@ -158,7 +145,7 @@ export default {
     async onSubmit() {
       this.submit.loading = true;
 
-      const res = await useFetch(`${process.env.VUE_APP_BACKEND_API}/user`, {
+      const res = await useFetch(`${API}/user`, {
         method: "post",
         body: {
           email: this.form.email,
